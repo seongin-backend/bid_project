@@ -1,0 +1,13 @@
+# Project exclude paths
+/.gradle/
+/build/
+/out/
+/out/production/classes/
+/.idea
+/gradle
+
+### grade ###
+gradle
+gradlew
+gradlew.bat
+settings.gradle

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="bid.mapper.BidMapper">
+
+    <resultMap type="bid.dto.BidMasterDto" id="bidMaster">
+        <result property="baljunkiId" column="BALJUNKI_ID"/>
+        <result property="baljunkiGubnCode" column="BALJUNKI_GUBN_CODE"/>
+        <result property="teukiRemk" column="TEUKI_REMK"/>
+        <result property="baljunEmplSign" column="BALJUN_EMPL_SIGN"/>
+        <result property="submitDate" column="SUBMIT_DATE"/>
+        <result property="submitEmplName" column="SUBMIT_EMPL_NAME"/>
+        <result property="submitEmplSign" column="SUBMIT_EMPL_SIGN"/>
+    </resultMap>
+
+    <select id="selectBidMaster" parameterType="Long" resultMap="bidMaster">
+        SELECT BALJUNKI_ID,
+                BALJUNKI_GUBN_CODE,
+                TEUKI_REMK,
+                BALJUN_EMPL_SIGN,
+                SUBMIT_DATE,
+                SUBMIT_TIME,
+                SUBMIT_EMPL_NAME,
+                SUBMIT_EMPL_SIGN
+         FROM TB_BID_MASTER
+    </select>
+    <insert id="insertBidMaster" parameterType="bid.vo.BidMasterVo" >
+        INSERT INTO TB_BID_MASTER ( BALJUNKI_ID, BALJUNKI_GUBN_CODE, TEUKI_REMK, BALJUN_EMPL_SIGN
+              , SUBMIT_DATE, SUBMIT_TIME, SUBMIT_EMPL_NAME, SUBMIT_EMPL_SIGN)
+        VALUES(#{baljunkiId}, #{baljunkiGubnCode}, #{teukiRemk}, #{baljunEmplSign}
+              , #{submitDate}, #{submitTime}, #{submitEmplName},#{submitEmplSign})
+    </insert>
+    <update id="updateBidMaster" parameterType="bid.vo.BidMasterVo" >
+        UPDATE TB_BID_MASTER
+           SET BALJUNKI_GUBN_CODE = #{baljunkiGubnCode}, TEUKI_REMK = #{teukiRemk}, BALJUN_EMPL_SIGN = #{baljunEmplSign}
+             , SUBMIT_DATE = #{submitDate}, SUBMIT_TIME = #{submitTime}, SUBMIT_EMPL_NAME = #{submitEmplName}, SUBMIT_EMPL_SIGN = #{submitEmplSign}
+         WHERE BALJUNKI_ID = #{baljunkiId}
+    </update>
+    <delete id="deleteBidMaster" parameterType="bid.vo.BidMasterVo" >
+        DELETE FROM TB_BID_MASTER
+         WHERE BALJUNKI_ID = #{baljunkiId}
+    </delete>
+</mapper>
