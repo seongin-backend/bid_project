@@ -11,7 +11,6 @@
         <result property="submitEmplName" column="SUBMIT_EMPL_NAME"/>
         <result property="submitEmplSign" column="SUBMIT_EMPL_SIGN"/>
     </resultMap>
-
     <select id="selectBidMaster" parameterType="Long" resultMap="bidMaster">
         SELECT BALJUNKI_ID,
                 BALJUNKI_GUBN_CODE,
@@ -39,4 +38,32 @@
         DELETE FROM TB_BID_MASTER
          WHERE BALJUNKI_ID = #{baljunkiId}
     </delete>
+    <resultMap type="bid.dto.BidTeukseongDto" id="bidTeukseong">
+        <result property="baljunkiId" column="BALJUNKI_ID"/>
+        <result property="teukseongBunryuCode" column="TEUKSEONG_BUNRYU_CODE"/>
+        <result property="teukseongBunryuGubnCode" column="TEUKSEONG_BUNRYU_GUBN_CODE"/>
+        <result property="teukseongBunryuGubnName" column="TEUKSEONG_BUNRYU_GUBN_NAME"/>
+        <result property="submitVal" column="SUBMIT_VAL"/>
+        <result property="updateRemk" column="UPDATE_REMK"/>
+    </resultMap>
+    <select id="selectBidTeukseongList" resultMap="bidTeukseong" parameterType="bid.vo.BidTeukseongVo" >
+        SELECT BALJUNKI_ID,
+                TEUKSEONG_BUNRYU_CODE,
+                TEUKSEONG_BUNRYU_GUBN_CODE,
+                TEUKSEONG_BUNRYU_GUBN_NAME,
+                SUBMIT_VAL,
+                UPDATE_REMK
+        FROM TB_BID_TEUKSEONG
+        WHERE BALJUNKI_ID = #{baljunkiId}
+    </select>
+    <insert id="insertBidTeukseong" parameterType="bid.vo.BidTeukseongVo" >
+        INSERT INTO TB_BID_TEUKSEONG ( BALJUNKI_ID, TEUKSEONG_BUNRYU_CODE, TEUKSEONG_BUNRYU_GUBN_CODE
+                                    , TEUKSEONG_BUNRYU_GUBN_NAME, SUBMIT_VAL, UPDATE_REMK)
+        VALUES(#{baljunkiId}, #{teukseongBunryuCode}, #{teukseongBunryuGubnCode}
+             , #{teukseongBunryuGubnName}, #{submitVal}, #{updateRemk})
+    </insert>
+    <insert id="insertBidDetail" parameterType="bid.vo.BidDetailVo" >
+        INSERT INTO TB_BID_DETAIL(BALJUNKI_ID,BID_GUBN_CODE,GURAE_TIME_GUBN_CODE,GURAE_TIME,GUBN_CODE,GUBN_NAME,SUBMIT_VAL)
+        VALUES(#{baljunkiId},#{bidGubnCode},#{guraeTimeGubnCode},#{guraeTime},#{gubnCode},#{gubnName},#{submitVal});
+    </insert>
 </mapper>

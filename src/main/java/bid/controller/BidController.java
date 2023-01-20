@@ -1,8 +1,11 @@
 package bid.controller;
 
 import bid.dto.BidMasterDto;
+import bid.dto.BidTeukseongDto;
 import bid.service.BidService;
+import bid.vo.BidDetailVo;
 import bid.vo.BidMasterVo;
+import bid.vo.BidTeukseongVo;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +20,6 @@ public class BidController {
     public BidController(BidService bidService) {
         this.bidService = bidService;
     }
-
     @GetMapping("/bid/select")
     public ResponseEntity<?> selectBid() {
         List<BidMasterDto> bidMasters = bidService.selectBidMaster();
@@ -44,20 +46,23 @@ public class BidController {
         if(result < 1) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         return new ResponseEntity<Integer>(result, HttpStatus.OK);
     }
-
+    @GetMapping("/bid/teukseong/select")
+    public ResponseEntity<?> selectBidTeukseong(@RequestBody BidTeukseongVo bidTeukseongVo) {
+        List<BidTeukseongDto> bidTeukseongVoList = bidService.selectBidTeukseongList(bidTeukseongVo);
+        return new ResponseEntity<List<BidTeukseongDto>>(bidTeukseongVoList, HttpStatus.OK);
+    }
     @PostMapping("/bid/teukseong/insert")
-    public ResponseEntity<?> insertBidTeukseong(@RequestBody LinkedList<BidMasterVo> bidMasterVoList) {
+    public ResponseEntity<?> insertBidTeukseong(@RequestBody LinkedList<BidTeukseongVo> bidTeukseongVoList) {
         int result = 0;
-        result = bidService.insertBidTeukseong(bidMasterVoList);
+        result = bidService.insertBidTeukseong(bidTeukseongVoList);
         if(result < 1) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         return new ResponseEntity<Integer>(result, HttpStatus.OK);
     }
-
-    /*
-    @GetMapping("select")
-    public ResponseBody hello(Model model) {
-        return model;
+    @PostMapping("/bid/detail/insert")
+    public ResponseEntity<?> insertBidDetail(@RequestBody LinkedList<BidDetailVo> detailVoList) {
+        int result = 0;
+        result = bidService.insertBidDetail(detailVoList);
+        if(result < 1) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<Integer>(result, HttpStatus.OK);
     }
-
-     */
 }
