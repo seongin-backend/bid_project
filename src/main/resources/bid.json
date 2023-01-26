@@ -1,0 +1,232 @@
+http://localhost:8080/bid/master
+입찰마스터 조회
+{
+"guraeDate": "20230126",
+"baljunkiCompanyCode": "00001" ,
+"baljunkiGubnCode": "01",
+"baljunkiId": "BAJUNKI001"
+}
+입찰마스터 추가
+{
+"guraeDate": "20230126",
+"baljunkiCompanyCode": "00001",
+"baljunkiGubnCode": "01",
+"baljunkiId": "BAJUNKI001",
+"teukiRemk": "특이사항",
+"baljunkiCompanySign": "발전기회사서명이미지주소",
+"submitDate": "20220119",
+"submitTime": "12",
+"submitEmplNumb": "vtw1606",
+"submitEmplSign": "접수자서명이미지주소"
+}
+입찰마스터 수정
+{
+"teukiRemk": "특이사항2",
+"bidId" : "20230126_00001_01_BAJUNKI001"
+}
+입찰마스터 삭제
+{
+"bidId": "20230126_00001_01_BAJUNKI001"
+}
+
+{
+"bidId": "20230126_00001_01_BAJUNKI001"
+}
+입찰특성 추가
+[
+{
+"bidId": "20230126_00001_01_BAJUNKI001",
+"teukseongBunryuCode": "01",
+"teukseongBunryuGubnCode" : "01",
+"teukseongBunryuGubnName": "열간 기동소요시간",
+"submitVal": "8",
+"updateRemk": "시간 더 걸림"
+},
+{
+"bidId": "20230126_00001_01_BAJUNKI001",
+"teukseongBunryuCode": "01",
+"teukseongBunryuGubnCode": "02",
+"teukseongBunryuGubnName" : "열간 최소발전용량도달시간",
+"submitVal": "3",
+"updateRemk": "시간 줄음"
+}
+]
+입찰특성 수정
+[
+{
+"bidId": "20230126_00001_01_BAJUNKI001",
+"teukseongBunryuCode": "01",
+"teukseongBunryuGubnCode" : "01",
+"submitVal": "14",
+"updateRemk": "수정하고싶음1"
+},
+{
+"bidId": "20230126_00001_01_BAJUNKI001",
+"teukseongBunryuCode": "01",
+"teukseongBunryuGubnCode": "02",
+"submitVal": "10",
+"updateRemk" : "수정하고싶음2"
+}
+]
+-------------------
+http: //localhost:8080/bid/detail/
+입찰디테일 조회
+{
+"bidId": "20230126_00001_01_BAJUNKI001",
+"bidGubnCode": "01"
+}
+입찰디테일 삭제
+{
+"bidId": "20230126_00001_01_BAJUNKI001",
+"bidGubnCode": "01"
+}
+입찰디테일 수정
+[
+{
+"bidId": "20230126_00001_01_BAJUNKI001",
+"bidGubnCode": "01",
+"guraeTimeGubnCode" : "D-1",
+"guraeTime": "19",
+"gubnCode": "01",
+"gubnName": "공급가능용량",
+"submitVal": "2000"
+},
+{
+"bidId": "20230126_00001_01_BAJUNKI001",
+"bidGubnCode": "01",
+"guraeTimeGubnCode" : "D-1",
+"guraeTime": "20",
+"gubnCode": "01",
+"gubnName": "공급가능용량",
+"submitVal": "2100"
+}
+]
+입찰디테일 추가(JSON)
+[
+{
+"bidId": "20230126_00001_01_BAJUNKI001",
+"bidGubnCode": "01",
+"guraeTimeGubnCode" : "D-1",
+"guraeTime": "19",
+"gubnCode": "01",
+"gubnName": "공급가능용량",
+"submitVal": "1900"
+},
+{
+"bidId": "20230126_00001_01_BAJUNKI001",
+"bidGubnCode": "01",
+"guraeTimeGubnCode" : "D-1",
+"guraeTime": "20",
+"gubnCode": "01",
+"gubnName": "공급가능용량",
+"submitVal": "2000"
+},
+{
+"bidId": "20230126_00001_01_BAJUNKI001",
+"bidGubnCode": "01",
+"guraeTimeGubnCode" : "D-1",
+"guraeTime": "21",
+"gubnCode": "01",
+"gubnName": "공급가능용량",
+"submitVal": "2100"
+},
+{
+"bidId": "20230126_00001_01_BAJUNKI001",
+"bidGubnCode": "01",
+"guraeTimeGubnCode" : "D-1",
+"guraeTime": "22",
+"gubnCode": "01",
+"gubnName": "공급가능용량",
+"submitVal": "2200"
+},
+{
+"bidId": "20230126_00001_01_BAJUNKI001",
+"bidGubnCode": "01",
+"guraeTimeGubnCode" : "D-1",
+"guraeTime": "23",
+"gubnCode": "01",
+"gubnName": "공급가능용량",
+"submitVal": "2300"
+},
+{
+"bidId": "20230126_00001_01_BAJUNKI001",
+"bidGubnCode": "01",
+"guraeTimeGubnCode" : "D-1",
+"guraeTime": "24",
+"gubnCode": "01",
+"gubnName": "공급가능용량",
+"submitVal": "2400"
+},
+{
+"bidId": "20230126_00001_01_BAJUNKI001",
+"bidGubnCode": "01",
+"guraeTimeGubnCode" : "D",
+"guraeTime": "1",
+"gubnCode": "01",
+"gubnName": "공급가능용량",
+"submitVal": "100"
+},
+{
+"bidId": "20230126_00001_01_BAJUNKI001",
+"bidGubnCode": "01",
+"guraeTimeGubnCode" : "D",
+"guraeTime": "2",
+"gubnCode": "01",
+"gubnName": "공급가능용량",
+"submitVal": "200"
+},
+{
+"bidId": "20230126_00001_01_BAJUNKI001",
+"bidGubnCode": "01",
+"guraeTimeGubnCode" : "D",
+"guraeTime": "3",
+"gubnCode": "01",
+"gubnName": "공급가능용량",
+"submitVal": "300"
+},
+{
+"bidId": "20230126_00001_01_BAJUNKI001",
+"bidGubnCode": "01",
+"guraeTimeGubnCode" : "D",
+"guraeTime": "4",
+"gubnCode": "01",
+"gubnName": "공급가능용량",
+"submitVal": "400"
+},
+{
+"bidId": "20230126_00001_01_BAJUNKI001",
+"bidGubnCode": "01",
+"guraeTimeGubnCode" : "D-1",
+"guraeTime": "19",
+"gubnCode": "02",
+"gubnName": "연료량",
+"submitVal": "1900"
+},
+{
+"bidId": "20230126_00001_01_BAJUNKI001",
+"bidGubnCode": "01",
+"guraeTimeGubnCode" : "D-1",
+"guraeTime": "20",
+"gubnCode": "02",
+"gubnName": "연료량",
+"submitVal": "2000"
+},
+{
+"bidId": "20230126_00001_01_BAJUNKI001",
+"bidGubnCode": "01",
+"guraeTimeGubnCode" : "D-1",
+"guraeTime": "21",
+"gubnCode": "02",
+"gubnName": "연료량",
+"submitVal": "2100"
+},
+{
+"bidId": "20230126_00001_01_BAJUNKI001",
+"bidGubnCode": "01",
+"guraeTimeGubnCode" : "D-1",
+"guraeTime": "22",
+"gubnCode": "02",
+"gubnName": "연료량",
+"submitVal": "2200"
+}
+]
