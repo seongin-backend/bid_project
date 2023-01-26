@@ -1,9 +1,6 @@
 package bid.service;
 
-import bid.dto.BidDetailDto;
-import bid.dto.BidDetailDtoPivot;
-import bid.dto.BidMasterDto;
-import bid.dto.BidTeukseongDto;
+import bid.dto.*;
 import bid.vo.BidDetailVo;
 import bid.vo.BidMasterVo;
 import bid.vo.BidTeukseongVo;
@@ -18,9 +15,13 @@ public interface BidService {
     int updateBidMaster(BidMasterVo bidMasterVo);
     int deleteBidMaster(BidMasterVo bidMasterVo);
     List<BidTeukseongDto> selectBidTeukseongList(BidTeukseongVo bidTeukseongVo);
+    List<BidTeukseongDtoPivot> selectBidTeukseongListPivot(BidTeukseongVo bidTeukseongVo);
     int insertBidTeukseong(List<BidTeukseongVo> bidMasterVoList);
-    int insertBidDetail(LinkedList<BidDetailVo> detailVoList);
+    int updateBidTeukseong(LinkedList<BidTeukseongVo> bidTeukseongVoList);
     List<BidDetailDto> selectBidDetailList(BidDetailVo detailVo);
-    List<BidDetailDtoPivot> selectBidDetailListPivot(BidDetailVo detailVo) throws JsonProcessingException;
+    List<BidDetailDtoPivot> selectBidDetailListPivot(BidDetailVo detailVo);
+    int insertBidDetail(LinkedList<BidDetailVo> detailVoList);
+    int updateBidDetail(LinkedList<BidDetailVo> detailVoList);
     int deleteBidDetail(BidDetailVo detailVo);
+
 }

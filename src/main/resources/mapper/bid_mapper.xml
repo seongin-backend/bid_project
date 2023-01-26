@@ -39,7 +39,7 @@
                                   , SUBMIT_DATE, SUBMIT_TIME, SUBMIT_EMPL_NUMB, SUBMIT_EMPL_SIGN)
         VALUES( #{guraeDate} || '_' || #{baljunkiCompanyCode}|| '_' || #{baljunkiGubnCode} || '_' || #{baljunkiId}, #{guraeDate}, #{baljunkiCompanyCode}
               , #{baljunkiGubnCode}, #{baljunkiId}, #{teukiRemk}, #{baljunkiCompanySign}
-              , #{submitDate}, #{submitTime}, #{submitEmplNumb},#{submitEmplSign})
+              , TO_CHAR(SYSDATE, 'YYYYMMDD'),  TO_CHAR(SYSDATE, 'HH24MI'), #{submitEmplNumb},#{submitEmplSign})
     </insert>
     <update id="updateBidMaster" parameterType="bid.vo.BidMasterVo" >
         UPDATE TB_BID_MASTER
@@ -49,8 +49,16 @@
          WHERE BID_ID = #{bidId}
     </update>
     <delete id="deleteBidMaster" parameterType="bid.vo.BidMasterVo" >
+    BEGIN
+        DELETE FROM TB_BID_DETAIL
+        WHERE BID_ID = #{bidId};
+
+        DELETE FROM TB_BID_TEUKSEONG
+        WHERE BID_ID = #{bidId};
+
         DELETE FROM TB_BID_MASTER
-         WHERE BID_ID = #{bidId}
+         WHERE BID_ID = #{bidId};
+    END;
     </delete>
     <resultMap type="bid.dto.BidTeukseongDto" id="bidTeukseongDto">
         <result property="bidId" column="BID_ID"/>
@@ -70,12 +78,69 @@
         FROM TB_BID_TEUKSEONG
         WHERE BID_ID = #{bidId}
     </select>
+    <resultMap type="bid.dto.BidTeukseongDtoPivot" id="bidTeukseongDtoPivot">
+        <result property="bidId" column="BID_ID"/>
+        <result property="teukseongBunryuCode" column="TEUKSEONG_BUNRYU_CODE"/>
+        <result property="SUBMIT_VAL_01_01" column="'01_01'_SUBMIT_VAL"/>
+        <result property="SUBMIT_VAL_01_02" column="'01_02'_SUBMIT_VAL"/>
+        <result property="SUBMIT_VAL_01_03" column="'01_03'_SUBMIT_VAL"/>
+        <result property="SUBMIT_VAL_01_04" column="'01_04'_SUBMIT_VAL"/>
+        <result property="SUBMIT_VAL_01_05" column="'01_05'_SUBMIT_VAL"/>
+        <result property="SUBMIT_VAL_01_06" column="'01_06'_SUBMIT_VAL"/>
+        <result property="SUBMIT_VAL_01_07" column="'01_07'_SUBMIT_VAL"/>
+        <result property="SUBMIT_VAL_01_08" column="'01_08'_SUBMIT_VAL"/>
+        <result property="SUBMIT_VAL_01_09" column="'01_09'_SUBMIT_VAL"/>
+        <result property="SUBMIT_VAL_01_10" column="'01_10'_SUBMIT_VAL"/>
+        <result property="SUBMIT_VAL_01_11" column="'01_11'_SUBMIT_VAL"/>
+        <result property="SUBMIT_VAL_01_12" column="'01_12'_SUBMIT_VAL"/>
+        <result property="SUBMIT_VAL_02_01" column="'02_01'_SUBMIT_VAL"/>
+        <result property="SUBMIT_VAL_02_02" column="'02_02'_SUBMIT_VAL"/>
+        <result property="UPDATE_REMK_01_01" column="'01_01'_UPDATE_REMK"/>
+        <result property="UPDATE_REMK_01_02" column="'01_02'_UPDATE_REMK"/>
+        <result property="UPDATE_REMK_01_03" column="'01_03'_UPDATE_REMK"/>
+        <result property="UPDATE_REMK_01_04" column="'01_04'_UPDATE_REMK"/>
+        <result property="UPDATE_REMK_01_05" column="'01_05'_UPDATE_REMK"/>
+        <result property="UPDATE_REMK_01_06" column="'01_06'_UPDATE_REMK"/>
+        <result property="UPDATE_REMK_01_07" column="'01_07'_UPDATE_REMK"/>
+        <result property="UPDATE_REMK_01_08" column="'01_08'_UPDATE_REMK"/>
+        <result property="UPDATE_REMK_01_09" column="'01_09'_UPDATE_REMK"/>
+        <result property="UPDATE_REMK_01_10" column="'01_10'_UPDATE_REMK"/>
+        <result property="UPDATE_REMK_01_11" column="'01_11'_UPDATE_REMK"/>
+        <result property="UPDATE_REMK_01_12" column="'01_12'_UPDATE_REMK"/>
+        <result property="UPDATE_REMK_02_01" column="'02_01'_UPDATE_REMK"/>
+        <result property="UPDATE_REMK_02_02" column="'02_02'_UPDATE_REMK"/>
+    </resultMap>
+    <select id="selectBidTeukseongListPivot" resultMap="bidTeukseongDtoPivot" parameterType="bid.vo.BidTeukseongVo" >
+        SELECT *
+        FROM (
+             SELECT BID_ID,
+                    TEUKSEONG_BUNRYU_CODE,
+                    TEUKSEONG_BUNRYU_CODE||'_'||TEUKSEONG_BUNRYU_GUBN_CODE AS TEUKSEONG_BUNRYU_AND_GUBN_CODE,
+                    SUBMIT_VAL,
+                    UPDATE_REMK
+                FROM TB_BID_TEUKSEONG
+                WHERE BID_ID = #{bidId}
+        )
+        PIVOT (
+            MAX(SUBMIT_VAL) SUBMIT_VAL, MAX(UPDATE_REMK) UPDATE_REMK FOR TEUKSEONG_BUNRYU_AND_GUBN_CODE IN('01_01', '01_02', '01_03', '01_04', '01_05', '01_06'
+            , '01_07', '01_08', '01_09', '01_10', '01_11', '01_12'
+            , '02_01', '02_02'
+            )
+        )
+    </select>
     <insert id="insertBidTeukseong" parameterType="bid.vo.BidTeukseongVo" >
         INSERT INTO TB_BID_TEUKSEONG ( BID_ID, TEUKSEONG_BUNRYU_CODE, TEUKSEONG_BUNRYU_GUBN_CODE
                                     , TEUKSEONG_BUNRYU_GUBN_NAME, SUBMIT_VAL, UPDATE_REMK)
         VALUES(#{bidId}, #{teukseongBunryuCode}, #{teukseongBunryuGubnCode}
              , #{teukseongBunryuGubnName}, #{submitVal}, #{updateRemk})
     </insert>
+    <update id="updateBidTeukseong" parameterType="bid.vo.BidMasterVo" >
+        UPDATE TB_BID_TEUKSEONG
+           SET SUBMIT_VAL = #{submitVal}, UPDATE_REMK = #{updateRemk}
+         WHERE BID_ID = #{bidId}
+           AND TEUKSEONG_BUNRYU_CODE = #{teukseongBunryuCode}
+           AND TEUKSEONG_BUNRYU_GUBN_CODE = #{teukseongBunryuGubnCode}
+    </update>
     <resultMap type="bid.dto.BidDetailDto" id="bidDetailDto">
         <result property="bidId" column="BID_ID"/>
         <result property="bidGubnCode" column="BID_GUBN_CODE"/>
@@ -159,6 +224,15 @@
         VALUES(#{bidId},#{bidGubnCode},#{guraeTimeGubnCode}
                                 ,#{guraeTime},#{gubnCode},#{gubnName},#{submitVal})
     </insert>
+    <update id="updateBidDetail" parameterType="bid.vo.BidDetailVo" >
+        UPDATE TB_BID_DETAIL
+          SET SUBMIT_VAL = #{submitVal}
+         WHERE BID_ID = #{bidId}
+         AND BID_GUBN_CODE = #{bidGubnCode}
+         AND GURAE_TIME_GUBN_CODE = #{guraeTimeGubnCode}
+         AND GURAE_TIME = #{guraeTime}
+         AND GUBN_CODE = #{gubnCode}
+    </update>
     <delete id="deleteBidDetail" parameterType="bid.vo.BidDetailVo" >
         DELETE FROM TB_BID_DETAIL
         WHERE BID_ID = #{bidId}

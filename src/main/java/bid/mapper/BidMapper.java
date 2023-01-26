@@ -1,9 +1,6 @@
 package bid.mapper;
 
-import bid.dto.BidDetailDto;
-import bid.dto.BidDetailDtoPivot;
-import bid.dto.BidMasterDto;
-import bid.dto.BidTeukseongDto;
+import bid.dto.*;
 import bid.vo.BidDetailVo;
 import bid.vo.BidMasterVo;
 import bid.vo.BidTeukseongVo;
@@ -18,9 +15,12 @@ public interface BidMapper {
     int updateBidMaster(BidMasterVo bidMasterVo);
     int deleteBidMaster(BidMasterVo bidMasterVo);
     LinkedList<BidTeukseongDto> selectBidTeukseongList(BidTeukseongVo bidTeukseongVo);
+    LinkedList<BidTeukseongDtoPivot> selectBidTeukseongListPivot(BidTeukseongVo bidTeukseongVo);
     int insertBidTeukseong(BidTeukseongVo bidTeukseongVo);
     int insertBidDetail(BidDetailVo bidDetailVo);
     LinkedList<BidDetailDto> selectBidDetailList(BidDetailVo detailVo);
     LinkedList<BidDetailDtoPivot> selectBidDetailListPivot(BidDetailVo detailVo);
     int deleteBidDetail(BidDetailVo detailVo);
+    int updateBidTeukseong(BidTeukseongVo bidTeukseongVo);
+    int updateBidDetail(BidDetailVo bidDetailVo);
 }

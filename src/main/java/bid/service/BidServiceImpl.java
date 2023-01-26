@@ -1,9 +1,6 @@
 package bid.service;
 
-import bid.dto.BidDetailDto;
-import bid.dto.BidDetailDtoPivot;
-import bid.dto.BidMasterDto;
-import bid.dto.BidTeukseongDto;
+import bid.dto.*;
 import bid.mapper.BidMapper;
 import bid.vo.BidDetailVo;
 import bid.vo.BidMasterVo;
@@ -39,6 +36,10 @@ public class BidServiceImpl implements BidService{
         LinkedList<BidTeukseongDto> bidTeukseongDtoList = bidMapper.selectBidTeukseongList(bidTeukseongVo);
         return bidTeukseongDtoList;
     }
+    public List<BidTeukseongDtoPivot> selectBidTeukseongListPivot(BidTeukseongVo bidTeukseongVo) {
+        LinkedList<BidTeukseongDtoPivot> bidTeukseongDtoListPivot = bidMapper.selectBidTeukseongListPivot(bidTeukseongVo);
+        return bidTeukseongDtoListPivot;
+    }
     public int insertBidTeukseong(List<BidTeukseongVo> bidTeukseongVoList) {
         int result = 0;
         for (BidTeukseongVo bidTeukseongVo : bidTeukseongVoList) {
@@ -55,6 +56,14 @@ public class BidServiceImpl implements BidService{
         }
         return result;
     }
+    public int updateBidDetail(LinkedList<BidDetailVo> detailVoList) {
+        int result = 0;
+        for (BidDetailVo bidDetailVo : detailVoList) {
+            bidMapper.updateBidDetail(bidDetailVo);
+            result++;
+        }
+        return result;
+    }
     public List<BidDetailDto> selectBidDetailList(BidDetailVo detailVo) {
         LinkedList<BidDetailDto> bidDetailDtos = bidMapper.selectBidDetailList(detailVo);
         return bidDetailDtos;
@@ -65,6 +74,14 @@ public class BidServiceImpl implements BidService{
     }
     public int deleteBidDetail(BidDetailVo detailVo) {
         int result = bidMapper.deleteBidDetail(detailVo);
+        return result;
+    }
+    public int updateBidTeukseong(LinkedList<BidTeukseongVo> bidTeukseongVoList) {
+        int result = 0;
+        for (BidTeukseongVo bidTeukseongVo : bidTeukseongVoList) {
+            bidMapper.updateBidTeukseong(bidTeukseongVo);
+            result++;
+        }
         return result;
     }
 }

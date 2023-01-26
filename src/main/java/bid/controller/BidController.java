@@ -1,9 +1,6 @@
 package bid.controller;
 
-import bid.dto.BidDetailDto;
-import bid.dto.BidDetailDtoPivot;
-import bid.dto.BidMasterDto;
-import bid.dto.BidTeukseongDto;
+import bid.dto.*;
 import bid.service.BidService;
 import bid.vo.BidDetailVo;
 import bid.vo.BidMasterVo;
@@ -54,10 +51,22 @@ public class BidController {
         List<BidTeukseongDto> bidTeukseongVoList = bidService.selectBidTeukseongList(bidTeukseongVo);
         return new ResponseEntity<List<BidTeukseongDto>>(bidTeukseongVoList, HttpStatus.OK);
     }
+    @GetMapping("/bid/teukseong/pivot")
+    public ResponseEntity<?> selectBidTeukseongListPivot(@RequestBody BidTeukseongVo bidTeukseongVo) {
+        List<BidTeukseongDtoPivot> bidTeukseongVoListPivot = bidService.selectBidTeukseongListPivot(bidTeukseongVo);
+        return new ResponseEntity<List<BidTeukseongDtoPivot>>(bidTeukseongVoListPivot, HttpStatus.OK);
+    }
     @PostMapping("/bid/teukseong")
     public ResponseEntity<?> insertBidTeukseong(@RequestBody LinkedList<BidTeukseongVo> bidTeukseongVoList) {
         int result = 0;
         result = bidService.insertBidTeukseong(bidTeukseongVoList);
+        if(result < 1) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<Integer>(result, HttpStatus.OK);
+    }
+    @PatchMapping("/bid/teukseong")
+    public ResponseEntity<?> updateBidTeukseong(@RequestBody LinkedList<BidTeukseongVo> bidTeukseongVoList) {
+        int result = 0;
+        result = bidService.updateBidTeukseong(bidTeukseongVoList);
         if(result < 1) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         return new ResponseEntity<Integer>(result, HttpStatus.OK);
     }
@@ -75,6 +84,13 @@ public class BidController {
     public ResponseEntity<?> insertBidDetail(@RequestBody LinkedList<BidDetailVo> detailVoList) {
         int result = 0;
         result = bidService.insertBidDetail(detailVoList);
+        if(result < 1) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<Integer>(result, HttpStatus.OK);
+    }
+    @PatchMapping("/bid/detail")
+    public ResponseEntity<?> updateBidDetail(@RequestBody LinkedList<BidDetailVo> detailVoList) {
+        int result = 0;
+        result = bidService.updateBidDetail(detailVoList);
         if(result < 1) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         return new ResponseEntity<Integer>(result, HttpStatus.OK);
     }
