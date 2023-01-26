@@ -8,12 +8,15 @@ import lombok.ToString;
 @Setter
 @ToString
 public class BidMasterDto {
-    private String baljunkiId;
+    private String bidId;
+    private String guraeDate;
+    private String baljunkiCompanyCode;
     private String baljunkiGubnCode;
+    private String baljunkiId;
     private String teukiRemk;
-    private String baljunEmplSign;
+    private String baljunkiCompanySign;
     private String submitDate;
     private String submitTime;
-    private String submitEmplName;
+    private String submitEmplNumb;
     private String submitEmplSign;
 }

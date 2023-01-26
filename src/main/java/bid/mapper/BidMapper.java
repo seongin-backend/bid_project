@@ -1,5 +1,7 @@
 package bid.mapper;
 
+import bid.dto.BidDetailDto;
+import bid.dto.BidDetailDtoPivot;
 import bid.dto.BidMasterDto;
 import bid.dto.BidTeukseongDto;
 import bid.vo.BidDetailVo;
@@ -11,11 +13,14 @@ import java.util.LinkedList;
 
 @Mapper
 public interface BidMapper {
-    LinkedList<BidMasterDto> selectBidMaster();
+    LinkedList<BidMasterDto> selectBidMasterList(BidMasterVo bidMasterVo);
     int insertBidMaster(BidMasterVo bidMasterVo);
     int updateBidMaster(BidMasterVo bidMasterVo);
     int deleteBidMaster(BidMasterVo bidMasterVo);
     LinkedList<BidTeukseongDto> selectBidTeukseongList(BidTeukseongVo bidTeukseongVo);
     int insertBidTeukseong(BidTeukseongVo bidTeukseongVo);
     int insertBidDetail(BidDetailVo bidDetailVo);
+    LinkedList<BidDetailDto> selectBidDetailList(BidDetailVo detailVo);
+    LinkedList<BidDetailDtoPivot> selectBidDetailListPivot(BidDetailVo detailVo);
+    int deleteBidDetail(BidDetailVo detailVo);
 }

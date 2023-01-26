@@ -2,68 +2,166 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="bid.mapper.BidMapper">
 
-    <resultMap type="bid.dto.BidMasterDto" id="bidMaster">
-        <result property="baljunkiId" column="BALJUNKI_ID"/>
+    <resultMap type="bid.dto.BidMasterDto" id="bidMasterDto">
+        <result property="bidId" column="BID_ID"/>
+        <result property="guraeDate" column="GURAE_DATE"/>
+        <result property="baljunkiCompanyCode" column="BALJUNKI_COMPANY_CODE"/>
         <result property="baljunkiGubnCode" column="BALJUNKI_GUBN_CODE"/>
+        <result property="baljunkiId" column="BALJUNKI_ID"/>
         <result property="teukiRemk" column="TEUKI_REMK"/>
-        <result property="baljunEmplSign" column="BALJUN_EMPL_SIGN"/>
+        <result property="baljunkiCompanySign" column="BALJUNKI_COMPANY_SIGN"/>
         <result property="submitDate" column="SUBMIT_DATE"/>
-        <result property="submitEmplName" column="SUBMIT_EMPL_NAME"/>
+        <result property="submitTime" column="SUBMIT_TIME"/>
+        <result property="submitEmplNumb" column="SUBMIT_EMPL_NUMB"/>
         <result property="submitEmplSign" column="SUBMIT_EMPL_SIGN"/>
     </resultMap>
-    <select id="selectBidMaster" parameterType="Long" resultMap="bidMaster">
-        SELECT BALJUNKI_ID,
+    <select id="selectBidMasterList" parameterType="bid.vo.BidMasterVo" resultMap="bidMasterDto">
+         SELECT BID_ID,
+                GURAE_DATE,
+                BALJUNKI_COMPANY_CODE,
                 BALJUNKI_GUBN_CODE,
+                BALJUNKI_ID,
                 TEUKI_REMK,
-                BALJUN_EMPL_SIGN,
+                BALJUNKI_COMPANY_SIGN,
                 SUBMIT_DATE,
                 SUBMIT_TIME,
-                SUBMIT_EMPL_NAME,
+                SUBMIT_EMPL_NUMB,
                 SUBMIT_EMPL_SIGN
          FROM TB_BID_MASTER
+        WHERE GURAE_DATE = #{guraeDate}
+          AND BALJUNKI_COMPANY_CODE = #{baljunkiCompanyCode}
+          AND BALJUNKI_GUBN_CODE = #{baljunkiGubnCode}
+          AND BALJUNKI_ID = #{baljunkiId}
     </select>
     <insert id="insertBidMaster" parameterType="bid.vo.BidMasterVo" >
-        INSERT INTO TB_BID_MASTER ( BALJUNKI_ID, BALJUNKI_GUBN_CODE, TEUKI_REMK, BALJUN_EMPL_SIGN
-              , SUBMIT_DATE, SUBMIT_TIME, SUBMIT_EMPL_NAME, SUBMIT_EMPL_SIGN)
-        VALUES(#{baljunkiId}, #{baljunkiGubnCode}, #{teukiRemk}, #{baljunEmplSign}
-              , #{submitDate}, #{submitTime}, #{submitEmplName},#{submitEmplSign})
+        INSERT INTO TB_BID_MASTER ( BID_ID, GURAE_DATE, BALJUNKI_COMPANY_CODE
+                                  , BALJUNKI_GUBN_CODE,BALJUNKI_ID, TEUKI_REMK, BALJUNKI_COMPANY_SIGN
+                                  , SUBMIT_DATE, SUBMIT_TIME, SUBMIT_EMPL_NUMB, SUBMIT_EMPL_SIGN)
+        VALUES( #{guraeDate} || '_' || #{baljunkiCompanyCode}|| '_' || #{baljunkiGubnCode} || '_' || #{baljunkiId}, #{guraeDate}, #{baljunkiCompanyCode}
+              , #{baljunkiGubnCode}, #{baljunkiId}, #{teukiRemk}, #{baljunkiCompanySign}
+              , #{submitDate}, #{submitTime}, #{submitEmplNumb},#{submitEmplSign})
     </insert>
     <update id="updateBidMaster" parameterType="bid.vo.BidMasterVo" >
         UPDATE TB_BID_MASTER
-           SET BALJUNKI_GUBN_CODE = #{baljunkiGubnCode}, TEUKI_REMK = #{teukiRemk}, BALJUN_EMPL_SIGN = #{baljunEmplSign}
-             , SUBMIT_DATE = #{submitDate}, SUBMIT_TIME = #{submitTime}, SUBMIT_EMPL_NAME = #{submitEmplName}, SUBMIT_EMPL_SIGN = #{submitEmplSign}
-         WHERE BALJUNKI_ID = #{baljunkiId}
+           SET TEUKI_REMK = #{teukiRemk}
+             , SUBMIT_DATE = TO_CHAR(SYSDATE, 'YYYYMMDD')
+             , SUBMIT_TIME = TO_CHAR(SYSDATE, 'HH24MI')
+         WHERE BID_ID = #{bidId}
     </update>
     <delete id="deleteBidMaster" parameterType="bid.vo.BidMasterVo" >
         DELETE FROM TB_BID_MASTER
-         WHERE BALJUNKI_ID = #{baljunkiId}
+         WHERE BID_ID = #{bidId}
     </delete>
-    <resultMap type="bid.dto.BidTeukseongDto" id="bidTeukseong">
-        <result property="baljunkiId" column="BALJUNKI_ID"/>
+    <resultMap type="bid.dto.BidTeukseongDto" id="bidTeukseongDto">
+        <result property="bidId" column="BID_ID"/>
         <result property="teukseongBunryuCode" column="TEUKSEONG_BUNRYU_CODE"/>
         <result property="teukseongBunryuGubnCode" column="TEUKSEONG_BUNRYU_GUBN_CODE"/>
         <result property="teukseongBunryuGubnName" column="TEUKSEONG_BUNRYU_GUBN_NAME"/>
         <result property="submitVal" column="SUBMIT_VAL"/>
         <result property="updateRemk" column="UPDATE_REMK"/>
     </resultMap>
-    <select id="selectBidTeukseongList" resultMap="bidTeukseong" parameterType="bid.vo.BidTeukseongVo" >
-        SELECT BALJUNKI_ID,
+    <select id="selectBidTeukseongList" resultMap="bidTeukseongDto" parameterType="bid.vo.BidTeukseongVo" >
+        SELECT BID_ID,
                 TEUKSEONG_BUNRYU_CODE,
                 TEUKSEONG_BUNRYU_GUBN_CODE,
                 TEUKSEONG_BUNRYU_GUBN_NAME,
                 SUBMIT_VAL,
                 UPDATE_REMK
         FROM TB_BID_TEUKSEONG
-        WHERE BALJUNKI_ID = #{baljunkiId}
+        WHERE BID_ID = #{bidId}
     </select>
     <insert id="insertBidTeukseong" parameterType="bid.vo.BidTeukseongVo" >
-        INSERT INTO TB_BID_TEUKSEONG ( BALJUNKI_ID, TEUKSEONG_BUNRYU_CODE, TEUKSEONG_BUNRYU_GUBN_CODE
+        INSERT INTO TB_BID_TEUKSEONG ( BID_ID, TEUKSEONG_BUNRYU_CODE, TEUKSEONG_BUNRYU_GUBN_CODE
                                     , TEUKSEONG_BUNRYU_GUBN_NAME, SUBMIT_VAL, UPDATE_REMK)
-        VALUES(#{baljunkiId}, #{teukseongBunryuCode}, #{teukseongBunryuGubnCode}
+        VALUES(#{bidId}, #{teukseongBunryuCode}, #{teukseongBunryuGubnCode}
              , #{teukseongBunryuGubnName}, #{submitVal}, #{updateRemk})
     </insert>
+    <resultMap type="bid.dto.BidDetailDto" id="bidDetailDto">
+        <result property="bidId" column="BID_ID"/>
+        <result property="bidGubnCode" column="BID_GUBN_CODE"/>
+        <result property="guraeTimeGubnCode" column="GURAE_TIME_GUBN_CODE"/>
+        <result property="guraeTime" column="GURAE_TIME"/>
+        <result property="gubnCode" column="GUBN_CODE"/>
+        <result property="gubnName" column="GUBN_NAME"/>
+        <result property="submitVal" column="SUBMIT_VAL"/>
+    </resultMap>
+    <select id="selectBidDetailList" resultMap="bidDetailDto" parameterType="bid.vo.BidDetailVo" >
+        SELECT BID_ID,BID_GUBN_CODE,GURAE_TIME_GUBN_CODE
+              ,GURAE_TIME,GUBN_CODE,GUBN_NAME,SUBMIT_VAL
+        FROM TB_BID_DETAIL
+        WHERE BID_ID = #{bidId}
+          AND BID_GUBN_CODE = #{bidGubnCode}
+    </select>
+    <resultMap type="bid.dto.BidDetailDtoPivot" id="bidDetailDtoPivot">
+        <result property="bidId" column="BID_ID"/>
+        <result property="bidGubnCode" column="BID_GUBN_CODE"/>
+        <result property="gubnCode" column="GUBN_CODE"/>
+        <result property="gubnName" column="GUBN_NAME"/>
+        <result property="dMinus1_19" column="'D-1_19'"/>
+        <result property="dMinus1_20" column="'D-1_20'"/>
+        <result property="dMinus1_21" column="'D-1_21'"/>
+        <result property="dMinus1_22" column="'D-1_22'"/>
+        <result property="dMinus1_23" column="'D-1_23'"/>
+        <result property="dMinus1_24" column="'D-1_24'"/>
+        <result property="d_1" column="'D_1'"/>
+        <result property="d_2" column="'D_2'"/>
+        <result property="d_3" column="'D_3'"/>
+        <result property="d_4" column="'D_4'"/>
+        <result property="d_5" column="'D_5'"/>
+        <result property="d_6" column="'D_6'"/>
+        <result property="d_7" column="'D_7'"/>
+        <result property="d_8" column="'D_8'"/>
+        <result property="d_9" column="'D_9'"/>
+        <result property="d_10" column="'D1_10'"/>
+        <result property="d_11" column="'D1_11'"/>
+        <result property="d_12" column="'D1_12'"/>
+        <result property="d_13" column="'D1_13'"/>
+        <result property="d_14" column="'D1_14'"/>
+        <result property="d_15" column="'D1_15'"/>
+        <result property="d_16" column="'D1_16'"/>
+        <result property="d_17" column="'D1_17'"/>
+        <result property="d_18" column="'D1_18'"/>
+        <result property="d_19" column="'D1_19'"/>
+        <result property="d_20" column="'D1_20'"/>
+        <result property="d_21" column="'D1_21'"/>
+        <result property="d_22" column="'D1_22'"/>
+        <result property="d_23" column="'D1_23'"/>
+        <result property="d_24" column="'D1_24'"/>
+        <result property="dPlus1_1" column="'D+1_1'"/>
+        <result property="dPlus1_2" column="'D+1_2'"/>
+        <result property="dPlus1_3" column="'D+1_3'"/>
+        <result property="dPlus1_4" column="'D+1_4'"/>
+    </resultMap>
+    <select id="selectBidDetailListPivot" resultMap="bidDetailDtoPivot" parameterType="bid.vo.BidDetailVo" >
+        SELECT *
+        FROM (
+            SELECT BID_ID,
+                    BID_GUBN_CODE,
+                    GUBN_CODE,
+                    GUBN_NAME,
+                    GURAE_TIME_GUBN_CODE || '_' || GURAE_TIME GUBN_AND_TIME,
+                    SUBMIT_VAL
+            FROM TB_BID_DETAIL
+           WHERE BID_ID = #{bidId}
+             AND BID_GUBN_CODE = #{bidGubnCode}
+        )
+        PIVOT (
+            MAX(SUBMIT_VAL) FOR GUBN_AND_TIME IN('D-1_19', 'D-1_20','D-1_21','D-1_22','D-1_23','D-1_24'
+            , 'D_1', 'D_2', 'D_3', 'D_4', 'D_5', 'D_6', 'D_7', 'D_8', 'D_9', 'D_10', 'D_11', 'D_12'
+            , 'D_13', 'D_14', 'D_15', 'D_16', 'D_17', 'D_18', 'D_19', 'D_20', 'D_21', 'D_22', 'D_23', 'D_24'
+            , 'D+1_1', 'D+1_2', 'D+1_3', 'D+1_4'
+            )
+        )
+    </select>
     <insert id="insertBidDetail" parameterType="bid.vo.BidDetailVo" >
-        INSERT INTO TB_BID_DETAIL(BALJUNKI_ID,BID_GUBN_CODE,GURAE_TIME_GUBN_CODE,GURAE_TIME,GUBN_CODE,GUBN_NAME,SUBMIT_VAL)
-        VALUES(#{baljunkiId},#{bidGubnCode},#{guraeTimeGubnCode},#{guraeTime},#{gubnCode},#{gubnName},#{submitVal});
+        INSERT INTO TB_BID_DETAIL(BID_ID,BID_GUBN_CODE,GURAE_TIME_GUBN_CODE
+                                ,GURAE_TIME,GUBN_CODE,GUBN_NAME,SUBMIT_VAL)
+        VALUES(#{bidId},#{bidGubnCode},#{guraeTimeGubnCode}
+                                ,#{guraeTime},#{gubnCode},#{gubnName},#{submitVal})
     </insert>
+    <delete id="deleteBidDetail" parameterType="bid.vo.BidDetailVo" >
+        DELETE FROM TB_BID_DETAIL
+        WHERE BID_ID = #{bidId}
+          AND BID_GUBN_CODE = #{bidGubnCode}
+    </delete>
 </mapper>

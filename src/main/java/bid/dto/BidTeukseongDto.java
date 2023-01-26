@@ -8,7 +8,7 @@ import lombok.ToString;
 @Setter
 @ToString
 public class BidTeukseongDto {
-    private String baljunkiId;
+    private String bidId;
     private String teukseongBunryuCode;
     private String teukseongBunryuGubnCode;
     private String teukseongBunryuGubnName;

@@ -1,5 +1,7 @@
 package bid.service;
 
+import bid.dto.BidDetailDto;
+import bid.dto.BidDetailDtoPivot;
 import bid.dto.BidMasterDto;
 import bid.dto.BidTeukseongDto;
 import bid.mapper.BidMapper;
@@ -17,8 +19,8 @@ public class BidServiceImpl implements BidService{
     public BidServiceImpl(BidMapper bidMapper) {
         this.bidMapper = bidMapper;
     }
-    public LinkedList<BidMasterDto> selectBidMaster() {
-        LinkedList<BidMasterDto> bidMasters = bidMapper.selectBidMaster();
+    public LinkedList<BidMasterDto> selectBidMasterList(BidMasterVo bidMasterVo) {
+        LinkedList<BidMasterDto> bidMasters = bidMapper.selectBidMasterList(bidMasterVo);
         return bidMasters;
     }
     public int insertBidMaster(BidMasterVo bidMasterVo) {
@@ -51,6 +53,18 @@ public class BidServiceImpl implements BidService{
             bidMapper.insertBidDetail(bidDetailVo);
             result++;
         }
+        return result;
+    }
+    public List<BidDetailDto> selectBidDetailList(BidDetailVo detailVo) {
+        LinkedList<BidDetailDto> bidDetailDtos = bidMapper.selectBidDetailList(detailVo);
+        return bidDetailDtos;
+    }
+    public List<BidDetailDtoPivot> selectBidDetailListPivot(BidDetailVo detailVo){
+        LinkedList<BidDetailDtoPivot> bidDetailDtosPivot = bidMapper.selectBidDetailListPivot(detailVo);
+        return bidDetailDtosPivot;
+    }
+    public int deleteBidDetail(BidDetailVo detailVo) {
+        int result = bidMapper.deleteBidDetail(detailVo);
         return result;
     }
 }
