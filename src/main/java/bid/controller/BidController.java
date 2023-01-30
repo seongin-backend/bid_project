@@ -6,6 +6,7 @@ import bid.vo.BidDetailVo;
 import bid.vo.BidMasterVo;
 import bid.vo.BidTeukseongVo;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,12 +15,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 public class BidController {
     private final BidService bidService;
 
-    public BidController(BidService bidService) {
-        this.bidService = bidService;
-    }
     @GetMapping("/bid/master")
     public ResponseEntity<?> selectBidMasterList(@RequestBody BidMasterVo bidMasterVo) {
         List<BidMasterDto> bidMasters = bidService.selectBidMasterList(bidMasterVo);

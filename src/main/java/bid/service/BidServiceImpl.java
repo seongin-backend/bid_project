@@ -5,17 +5,16 @@ import bid.mapper.BidMapper;
 import bid.vo.BidDetailVo;
 import bid.vo.BidMasterVo;
 import bid.vo.BidTeukseongVo;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.LinkedList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class BidServiceImpl implements BidService{
-
     private final BidMapper bidMapper;
-    public BidServiceImpl(BidMapper bidMapper) {
-        this.bidMapper = bidMapper;
-    }
+
     public LinkedList<BidMasterDto> selectBidMasterList(BidMasterVo bidMasterVo) {
         LinkedList<BidMasterDto> bidMasters = bidMapper.selectBidMasterList(bidMasterVo);
         return bidMasters;
