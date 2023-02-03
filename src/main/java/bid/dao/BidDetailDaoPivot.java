@@ -1,4 +1,4 @@
-package bid.dto;
+package bid.dao;
 
 import lombok.Getter;
 import lombok.Setter;

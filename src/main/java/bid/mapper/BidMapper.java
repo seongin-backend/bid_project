@@ -1,6 +1,6 @@
 package bid.mapper;
 
-import bid.dto.*;
+import bid.dao.*;
 import bid.vo.BidDetailVo;
 import bid.vo.BidMasterVo;
 import bid.vo.BidTeukseongVo;

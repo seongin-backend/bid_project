@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="bid.mapper.BidMapper">
 
-    <resultMap type="bid.dto.BidMasterDao" id="bidMasterDto">
+    <resultMap type="bid.dao.BidMasterDao" id="bidMasterDao">
         <result property="bidId" column="BID_ID"/>
         <result property="guraeDate" column="GURAE_DATE"/>
         <result property="baljunkiCompanyCode" column="BALJUNKI_COMPANY_CODE"/>
@@ -15,7 +15,7 @@
         <result property="submitEmplNumb" column="SUBMIT_EMPL_NUMB"/>
         <result property="submitEmplSign" column="SUBMIT_EMPL_SIGN"/>
     </resultMap>
-    <select id="selectBidMasterList" parameterType="bid.vo.BidMasterVo" resultMap="bidMasterDto">
+    <select id="selectBidMasterList" parameterType="bid.vo.BidMasterVo" resultMap="bidMasterDao">
          SELECT BID_ID,
                 GURAE_DATE,
                 BALJUNKI_COMPANY_CODE,
@@ -48,7 +48,7 @@
              , SUBMIT_TIME = TO_CHAR(SYSDATE, 'HH24MI')
          WHERE BID_ID = #{bidId}
     </update>
-    <delete id="deleteBidMaster" parameterType="bid.0vo.BidMasterVo" >
+    <delete id="deleteBidMaster" parameterType="bid.vo.BidMasterVo" >
     BEGIN
         DELETE FROM TB_BID_DETAIL
         WHERE BID_ID = #{bidId};
@@ -60,7 +60,7 @@
          WHERE BID_ID = #{bidId};
     END;
     </delete>
-    <resultMap type="bid.dto.BidTeukseongDao" id="bidTeukseongDto">
+    <resultMap type="bid.dao.BidTeukseongDao" id="bidTeukseongDao">
         <result property="bidId" column="BID_ID"/>
         <result property="teukseongBunryuCode" column="TEUKSEONG_BUNRYU_CODE"/>
         <result property="teukseongBunryuGubnCode" column="TEUKSEONG_BUNRYU_GUBN_CODE"/>
@@ -68,7 +68,7 @@
         <result property="submitVal" column="SUBMIT_VAL"/>
         <result property="updateRemk" column="UPDATE_REMK"/>
     </resultMap>
-    <select id="selectBidTeukseongList" resultMap="bidTeukseongDto" parameterType="bid.vo.BidTeukseongVo" >
+    <select id="selectBidTeukseongList" resultMap="bidTeukseongDao" parameterType="bid.vo.BidTeukseongVo" >
         SELECT BID_ID,
                 TEUKSEONG_BUNRYU_CODE,
                 TEUKSEONG_BUNRYU_GUBN_CODE,
@@ -78,7 +78,7 @@
         FROM TB_BID_TEUKSEONG
         WHERE BID_ID = #{bidId}
     </select>
-    <resultMap type="bid.dto.BidTeukseongDaoPivot" id="bidTeukseongDtoPivot">
+    <resultMap type="bid.dao.BidTeukseongDaoPivot" id="bidTeukseongDaoPivot">
         <result property="bidId" column="BID_ID"/>
         <result property="teukseongBunryuCode" column="TEUKSEONG_BUNRYU_CODE"/>
         <result property="SUBMIT_VAL_01_01" column="'01_01'_SUBMIT_VAL"/>
@@ -110,7 +110,7 @@
         <result property="UPDATE_REMK_02_01" column="'02_01'_UPDATE_REMK"/>
         <result property="UPDATE_REMK_02_02" column="'02_02'_UPDATE_REMK"/>
     </resultMap>
-    <select id="selectBidTeukseongListPivot" resultMap="bidTeukseongDtoPivot" parameterType="bid.vo.BidTeukseongVo" >
+    <select id="selectBidTeukseongListPivot" resultMap="bidTeukseongDaoPivot" parameterType="bid.vo.BidTeukseongVo" >
         SELECT *
         FROM (
              SELECT BID_ID,
@@ -141,7 +141,7 @@
            AND TEUKSEONG_BUNRYU_CODE = #{teukseongBunryuCode}
            AND TEUKSEONG_BUNRYU_GUBN_CODE = #{teukseongBunryuGubnCode}
     </update>
-    <resultMap type="bid.dto.BidDetailDao" id="bidDetailDto">
+    <resultMap type="bid.dao.BidDetailDao" id="bidDetailDao">
         <result property="bidId" column="BID_ID"/>
         <result property="bidGubnCode" column="BID_GUBN_CODE"/>
         <result property="guraeTimeGubnCode" column="GURAE_TIME_GUBN_CODE"/>
@@ -150,14 +150,14 @@
         <result property="gubnName" column="GUBN_NAME"/>
         <result property="submitVal" column="SUBMIT_VAL"/>
     </resultMap>
-    <select id="selectBidDetailList" resultMap="bidDetailDto" parameterType="bid.vo.BidDetailVo" >
+    <select id="selectBidDetailList" resultMap="bidDetailDao" parameterType="bid.vo.BidDetailVo" >
         SELECT BID_ID,BID_GUBN_CODE,GURAE_TIME_GUBN_CODE
               ,GURAE_TIME,GUBN_CODE,GUBN_NAME,SUBMIT_VAL
         FROM TB_BID_DETAIL
         WHERE BID_ID = #{bidId}
           AND BID_GUBN_CODE = #{bidGubnCode}
     </select>
-    <resultMap type="bid.dto.BidDetailDaoPivot" id="bidDetailDtoPivot">
+    <resultMap type="bid.dao.BidDetailDaoPivot" id="bidDetailDaoPivot">
         <result property="bidId" column="BID_ID"/>
         <result property="bidGubnCode" column="BID_GUBN_CODE"/>
         <result property="gubnCode" column="GUBN_CODE"/>
@@ -197,7 +197,7 @@
         <result property="dPlus1_3" column="'D+1_3'"/>
         <result property="dPlus1_4" column="'D+1_4'"/>
     </resultMap>
-    <select id="selectBidDetailListPivot" resultMap="bidDetailDtoPivot" parameterType="bid.vo.BidDetailVo" >
+    <select id="selectBidDetailListPivot" resultMap="bidDetailDaoPivot" parameterType="bid.vo.BidDetailVo" >
         SELECT *
         FROM (
             SELECT BID_ID,
