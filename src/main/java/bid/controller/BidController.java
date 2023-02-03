@@ -15,85 +15,86 @@ import java.util.LinkedList;
 import java.util.List;
 
 @RestController
+@RequestMapping("/bid")
 @RequiredArgsConstructor
 public class BidController {
     private final BidService bidService;
 
-    @GetMapping("/bid/master")
+    @GetMapping("/master")
     public ResponseEntity<?> selectBidMasterList(@RequestBody BidMasterVo bidMasterVo) {
-        List<BidMasterDto> bidMasters = bidService.selectBidMasterList(bidMasterVo);
-        return new ResponseEntity<List<BidMasterDto>>(bidMasters, HttpStatus.OK);
+        List<BidMasterDao> bidMasters = bidService.selectBidMasterList(bidMasterVo);
+        return new ResponseEntity<List<BidMasterDao>>(bidMasters, HttpStatus.OK);
     }
-    @PostMapping("/bid/master")
+    @PostMapping("/master")
     public ResponseEntity<?> insertBidMaster(@RequestBody BidMasterVo bidMasterVo) {
         int result = 0;
         result = bidService.insertBidMaster(bidMasterVo);
         if(result < 1) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         return new ResponseEntity<Integer>(result, HttpStatus.OK);
     }
-    @PatchMapping("/bid/master")
+    @PatchMapping("/master")
     public ResponseEntity<?> updateBidMaster(@RequestBody BidMasterVo bidMasterVo) {
         int result = 0;
         result = bidService.updateBidMaster(bidMasterVo);
         if(result < 1) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         return new ResponseEntity<Integer>(result, HttpStatus.OK);
     }
-    @DeleteMapping("/bid/master")
+    @DeleteMapping("/master")
     public ResponseEntity<?> deleteBidMaster(@RequestBody BidMasterVo bidMasterVo) {
         int result = 0;
         result = bidService.deleteBidMaster(bidMasterVo);
         if(result < 1) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         return new ResponseEntity<Integer>(result, HttpStatus.OK);
     }
-    @GetMapping("/bid/teukseong")
+    @GetMapping("/teukseong")
     public ResponseEntity<?> selectBidTeukseongList(@RequestBody BidTeukseongVo bidTeukseongVo) {
-        List<BidTeukseongDto> bidTeukseongVoList = bidService.selectBidTeukseongList(bidTeukseongVo);
-        return new ResponseEntity<List<BidTeukseongDto>>(bidTeukseongVoList, HttpStatus.OK);
+        List<BidTeukseongDao> bidTeukseongVoList = bidService.selectBidTeukseongList(bidTeukseongVo);
+        return new ResponseEntity<List<BidTeukseongDao>>(bidTeukseongVoList, HttpStatus.OK);
     }
-    @GetMapping("/bid/teukseong/pivot")
+    @GetMapping("/teukseong/pivot")
     public ResponseEntity<?> selectBidTeukseongListPivot(@RequestBody BidTeukseongVo bidTeukseongVo) {
-        List<BidTeukseongDtoPivot> bidTeukseongVoListPivot = bidService.selectBidTeukseongListPivot(bidTeukseongVo);
-        return new ResponseEntity<List<BidTeukseongDtoPivot>>(bidTeukseongVoListPivot, HttpStatus.OK);
+        List<BidTeukseongDaoPivot> bidTeukseongVoListPivot = bidService.selectBidTeukseongListPivot(bidTeukseongVo);
+        return new ResponseEntity<List<BidTeukseongDaoPivot>>(bidTeukseongVoListPivot, HttpStatus.OK);
     }
-    @PostMapping("/bid/teukseong")
+    @PostMapping("/teukseong")
     public ResponseEntity<?> insertBidTeukseong(@RequestBody LinkedList<BidTeukseongVo> bidTeukseongVoList) {
         int result = 0;
         result = bidService.insertBidTeukseong(bidTeukseongVoList);
         if(result < 1) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         return new ResponseEntity<Integer>(result, HttpStatus.OK);
     }
-    @PatchMapping("/bid/teukseong")
+    @PatchMapping("/teukseong")
     public ResponseEntity<?> updateBidTeukseong(@RequestBody LinkedList<BidTeukseongVo> bidTeukseongVoList) {
         int result = 0;
         result = bidService.updateBidTeukseong(bidTeukseongVoList);
         if(result < 1) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         return new ResponseEntity<Integer>(result, HttpStatus.OK);
     }
-    @GetMapping("/bid/detail")
+    @GetMapping("/detail")
     public ResponseEntity<?> selectBidDetailList(@RequestBody BidDetailVo detailVo) {
-        List<BidDetailDto> bidDetailDtos = bidService.selectBidDetailList(detailVo);
-        return new ResponseEntity<List<BidDetailDto>>(bidDetailDtos, HttpStatus.OK);
+        List<BidDetailDao> bidDetailDaos = bidService.selectBidDetailList(detailVo);
+        return new ResponseEntity<List<BidDetailDao>>(bidDetailDaos, HttpStatus.OK);
     }
-    @GetMapping("/bid/detail/pivot")
+    @GetMapping("/detail/pivot")
     public ResponseEntity<?> selectBidDetailListPivot(@RequestBody BidDetailVo detailVo) throws JsonProcessingException {
-        List<BidDetailDtoPivot> bidDetailDtosPivot = bidService.selectBidDetailListPivot(detailVo);
-        return new ResponseEntity<List<BidDetailDtoPivot>>(bidDetailDtosPivot, HttpStatus.OK);
+        List<BidDetailDaoPivot> bidDetailDtosPivot = bidService.selectBidDetailListPivot(detailVo);
+        return new ResponseEntity<List<BidDetailDaoPivot>>(bidDetailDtosPivot, HttpStatus.OK);
     }
-    @PostMapping("/bid/detail")
+    @PostMapping("/detail")
     public ResponseEntity<?> insertBidDetail(@RequestBody LinkedList<BidDetailVo> detailVoList) {
         int result = 0;
         result = bidService.insertBidDetail(detailVoList);
         if(result < 1) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         return new ResponseEntity<Integer>(result, HttpStatus.OK);
     }
-    @PatchMapping("/bid/detail")
+    @PatchMapping("/detail")
     public ResponseEntity<?> updateBidDetail(@RequestBody LinkedList<BidDetailVo> detailVoList) {
         int result = 0;
         result = bidService.updateBidDetail(detailVoList);
         if(result < 1) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         return new ResponseEntity<Integer>(result, HttpStatus.OK);
     }
-    @DeleteMapping("/bid/detail")
+    @DeleteMapping("/detail")
     public ResponseEntity<?> deleteBidDetail(@RequestBody BidDetailVo detailVo) {
         int result = 0;
         result = bidService.deleteBidDetail(detailVo);

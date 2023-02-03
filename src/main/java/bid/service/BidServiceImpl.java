@@ -5,18 +5,20 @@ import bid.mapper.BidMapper;
 import bid.vo.BidDetailVo;
 import bid.vo.BidMasterVo;
 import bid.vo.BidTeukseongVo;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.LinkedList;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class BidServiceImpl implements BidService{
     private final BidMapper bidMapper;
 
-    public LinkedList<BidMasterDto> selectBidMasterList(BidMasterVo bidMasterVo) {
-        LinkedList<BidMasterDto> bidMasters = bidMapper.selectBidMasterList(bidMasterVo);
+    public BidServiceImpl(BidMapper bidMapper) {
+        this.bidMapper = bidMapper;
+    }
+
+    public LinkedList<BidMasterDao> selectBidMasterList(BidMasterVo bidMasterVo) {
+        LinkedList<BidMasterDao> bidMasters = bidMapper.selectBidMasterList(bidMasterVo);
         return bidMasters;
     }
     public int insertBidMaster(BidMasterVo bidMasterVo) {
@@ -31,12 +33,12 @@ public class BidServiceImpl implements BidService{
         int result = bidMapper.deleteBidMaster(bidMasterVo);
         return result;
     }
-    public List<BidTeukseongDto> selectBidTeukseongList(BidTeukseongVo bidTeukseongVo) {
-        LinkedList<BidTeukseongDto> bidTeukseongDtoList = bidMapper.selectBidTeukseongList(bidTeukseongVo);
-        return bidTeukseongDtoList;
+    public List<BidTeukseongDao> selectBidTeukseongList(BidTeukseongVo bidTeukseongVo) {
+        LinkedList<BidTeukseongDao> bidTeukseongDaoList = bidMapper.selectBidTeukseongList(bidTeukseongVo);
+        return bidTeukseongDaoList;
     }
-    public List<BidTeukseongDtoPivot> selectBidTeukseongListPivot(BidTeukseongVo bidTeukseongVo) {
-        LinkedList<BidTeukseongDtoPivot> bidTeukseongDtoListPivot = bidMapper.selectBidTeukseongListPivot(bidTeukseongVo);
+    public List<BidTeukseongDaoPivot> selectBidTeukseongListPivot(BidTeukseongVo bidTeukseongVo) {
+        LinkedList<BidTeukseongDaoPivot> bidTeukseongDtoListPivot = bidMapper.selectBidTeukseongListPivot(bidTeukseongVo);
         return bidTeukseongDtoListPivot;
     }
     public int insertBidTeukseong(List<BidTeukseongVo> bidTeukseongVoList) {
@@ -63,12 +65,12 @@ public class BidServiceImpl implements BidService{
         }
         return result;
     }
-    public List<BidDetailDto> selectBidDetailList(BidDetailVo detailVo) {
-        LinkedList<BidDetailDto> bidDetailDtos = bidMapper.selectBidDetailList(detailVo);
-        return bidDetailDtos;
+    public List<BidDetailDao> selectBidDetailList(BidDetailVo detailVo) {
+        LinkedList<BidDetailDao> bidDetailDaos = bidMapper.selectBidDetailList(detailVo);
+        return bidDetailDaos;
     }
-    public List<BidDetailDtoPivot> selectBidDetailListPivot(BidDetailVo detailVo){
-        LinkedList<BidDetailDtoPivot> bidDetailDtosPivot = bidMapper.selectBidDetailListPivot(detailVo);
+    public List<BidDetailDaoPivot> selectBidDetailListPivot(BidDetailVo detailVo){
+        LinkedList<BidDetailDaoPivot> bidDetailDtosPivot = bidMapper.selectBidDetailListPivot(detailVo);
         return bidDetailDtosPivot;
     }
     public int deleteBidDetail(BidDetailVo detailVo) {

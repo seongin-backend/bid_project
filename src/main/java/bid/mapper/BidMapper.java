@@ -10,16 +10,16 @@ import java.util.LinkedList;
 
 @Mapper
 public interface BidMapper {
-    LinkedList<BidMasterDto> selectBidMasterList(BidMasterVo bidMasterVo);
+    LinkedList<BidMasterDao> selectBidMasterList(BidMasterVo bidMasterVo);
     int insertBidMaster(BidMasterVo bidMasterVo);
     int updateBidMaster(BidMasterVo bidMasterVo);
     int deleteBidMaster(BidMasterVo bidMasterVo);
-    LinkedList<BidTeukseongDto> selectBidTeukseongList(BidTeukseongVo bidTeukseongVo);
-    LinkedList<BidTeukseongDtoPivot> selectBidTeukseongListPivot(BidTeukseongVo bidTeukseongVo);
+    LinkedList<BidTeukseongDao> selectBidTeukseongList(BidTeukseongVo bidTeukseongVo);
+    LinkedList<BidTeukseongDaoPivot> selectBidTeukseongListPivot(BidTeukseongVo bidTeukseongVo);
     int insertBidTeukseong(BidTeukseongVo bidTeukseongVo);
     int insertBidDetail(BidDetailVo bidDetailVo);
-    LinkedList<BidDetailDto> selectBidDetailList(BidDetailVo detailVo);
-    LinkedList<BidDetailDtoPivot> selectBidDetailListPivot(BidDetailVo detailVo);
+    LinkedList<BidDetailDao> selectBidDetailList(BidDetailVo detailVo);
+    LinkedList<BidDetailDaoPivot> selectBidDetailListPivot(BidDetailVo detailVo);
     int deleteBidDetail(BidDetailVo detailVo);
     int updateBidTeukseong(BidTeukseongVo bidTeukseongVo);
     int updateBidDetail(BidDetailVo bidDetailVo);

@@ -7,7 +7,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class BidMasterDto {
+public class BidMasterDao {
     private String bidId;
     private String guraeDate;
     private String baljunkiCompanyCode;
