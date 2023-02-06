@@ -21,7 +21,7 @@ public class BidRestController {
     private final BidService bidService;
 
     @GetMapping("/master")
-    public ResponseEntity<?> selectBidMasterList(@RequestBody BidMasterVo bidMasterVo) {
+    public ResponseEntity<?> selectBidMasterList(@RequestParam BidMasterVo bidMasterVo) {
         List<BidMasterDao> bidMasters = bidService.selectBidMasterList(bidMasterVo);
         return new ResponseEntity<List<BidMasterDao>>(bidMasters, HttpStatus.OK);
     }
@@ -47,12 +47,12 @@ public class BidRestController {
         return new ResponseEntity<Integer>(result, HttpStatus.OK);
     }
     @GetMapping("/teukseong")
-    public ResponseEntity<?> selectBidTeukseongList(@RequestBody BidTeukseongVo bidTeukseongVo) {
+    public ResponseEntity<?> selectBidTeukseongList(@RequestParam BidTeukseongVo bidTeukseongVo) {
         List<BidTeukseongDao> bidTeukseongVoList = bidService.selectBidTeukseongList(bidTeukseongVo);
         return new ResponseEntity<List<BidTeukseongDao>>(bidTeukseongVoList, HttpStatus.OK);
     }
     @GetMapping("/teukseong/pivot")
-    public ResponseEntity<?> selectBidTeukseongListPivot(@RequestBody BidTeukseongVo bidTeukseongVo) {
+    public ResponseEntity<?> selectBidTeukseongListPivot(@RequestParam BidTeukseongVo bidTeukseongVo) {
         List<BidTeukseongDaoPivot> bidTeukseongVoListPivot = bidService.selectBidTeukseongListPivot(bidTeukseongVo);
         return new ResponseEntity<List<BidTeukseongDaoPivot>>(bidTeukseongVoListPivot, HttpStatus.OK);
     }
@@ -71,12 +71,12 @@ public class BidRestController {
         return new ResponseEntity<Integer>(result, HttpStatus.OK);
     }
     @GetMapping("/detail")
-    public ResponseEntity<?> selectBidDetailList(@RequestBody BidDetailVo detailVo) {
+    public ResponseEntity<?> selectBidDetailList(@RequestParam BidDetailVo detailVo) {
         List<BidDetailDao> bidDetailDaos = bidService.selectBidDetailList(detailVo);
         return new ResponseEntity<List<BidDetailDao>>(bidDetailDaos, HttpStatus.OK);
     }
     @GetMapping("/detail/pivot")
-    public ResponseEntity<?> selectBidDetailListPivot(@RequestBody BidDetailVo detailVo) throws JsonProcessingException {
+    public ResponseEntity<?> selectBidDetailListPivot(@RequestParam BidDetailVo detailVo) throws JsonProcessingException {
         List<BidDetailDaoPivot> bidDetailDtosPivot = bidService.selectBidDetailListPivot(detailVo);
         return new ResponseEntity<List<BidDetailDaoPivot>>(bidDetailDtosPivot, HttpStatus.OK);
     }
