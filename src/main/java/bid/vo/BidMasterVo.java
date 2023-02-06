@@ -1,10 +1,12 @@
 package bid.vo;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
 
 @Getter
 @ToString
+@AllArgsConstructor
 public class BidMasterVo {
     private String bidId;
     private String guraeDate;
@@ -17,4 +19,6 @@ public class BidMasterVo {
     private String submitTime;
     private String submitEmplNumb;
     private String submitEmplSign;
+
+
 }

@@ -17,7 +17,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/bid")
 @RequiredArgsConstructor
-public class BidController {
+public class BidRestController {
     private final BidService bidService;
 
     @GetMapping("/master")
