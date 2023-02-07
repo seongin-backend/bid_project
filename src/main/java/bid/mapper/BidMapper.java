@@ -6,20 +6,21 @@ import bid.vo.BidMasterVo;
 import bid.vo.BidTeukseongVo;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 
 @Mapper
 public interface BidMapper {
-    LinkedList<BidMasterDao> selectBidMasterList(BidMasterVo bidMasterVo);
+    BidMasterDao selectBidMasterList(HashMap<String, String> paramMap);
     int insertBidMaster(BidMasterVo bidMasterVo);
     int updateBidMaster(BidMasterVo bidMasterVo);
     int deleteBidMaster(BidMasterVo bidMasterVo);
-    LinkedList<BidTeukseongDao> selectBidTeukseongList(BidTeukseongVo bidTeukseongVo);
-    LinkedList<BidTeukseongDaoPivot> selectBidTeukseongListPivot(BidTeukseongVo bidTeukseongVo);
+    LinkedList<BidTeukseongDao> selectBidTeukseongList(HashMap<String, String> paramMap);
+    LinkedList<BidTeukseongDaoPivot> selectBidTeukseongListPivot(HashMap<String, String> paramMap);
     int insertBidTeukseong(BidTeukseongVo bidTeukseongVo);
     int insertBidDetail(BidDetailVo bidDetailVo);
-    LinkedList<BidDetailDao> selectBidDetailList(BidDetailVo detailVo);
-    LinkedList<BidDetailDaoPivot> selectBidDetailListPivot(BidDetailVo detailVo);
+    LinkedList<BidDetailDao> selectBidDetailList(HashMap<String, String> paramMap);
+    LinkedList<BidDetailDaoPivot> selectBidDetailListPivot(HashMap<String, String> paramMap);
     int deleteBidDetail(BidDetailVo detailVo);
     int updateBidTeukseong(BidTeukseongVo bidTeukseongVo);
     int updateBidDetail(BidDetailVo bidDetailVo);

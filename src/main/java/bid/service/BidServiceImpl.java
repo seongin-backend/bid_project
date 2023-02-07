@@ -6,6 +6,8 @@ import bid.vo.BidDetailVo;
 import bid.vo.BidMasterVo;
 import bid.vo.BidTeukseongVo;
 import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -17,9 +19,9 @@ public class BidServiceImpl implements BidService{
         this.bidMapper = bidMapper;
     }
 
-    public LinkedList<BidMasterDao> selectBidMasterList(BidMasterVo bidMasterVo) {
-        LinkedList<BidMasterDao> bidMasters = bidMapper.selectBidMasterList(bidMasterVo);
-        return bidMasters;
+    public BidMasterDao selectBidMasterList(HashMap<String, String> paramMap) {
+        BidMasterDao bidMasterDao = bidMapper.selectBidMasterList(paramMap);
+        return bidMasterDao;
     }
     public int insertBidMaster(BidMasterVo bidMasterVo) {
         int result = bidMapper.insertBidMaster(bidMasterVo);
@@ -33,12 +35,12 @@ public class BidServiceImpl implements BidService{
         int result = bidMapper.deleteBidMaster(bidMasterVo);
         return result;
     }
-    public List<BidTeukseongDao> selectBidTeukseongList(BidTeukseongVo bidTeukseongVo) {
-        LinkedList<BidTeukseongDao> bidTeukseongDaoList = bidMapper.selectBidTeukseongList(bidTeukseongVo);
+    public List<BidTeukseongDao> selectBidTeukseongList(HashMap<String, String> paramMap) {
+        LinkedList<BidTeukseongDao> bidTeukseongDaoList = bidMapper.selectBidTeukseongList(paramMap);
         return bidTeukseongDaoList;
     }
-    public List<BidTeukseongDaoPivot> selectBidTeukseongListPivot(BidTeukseongVo bidTeukseongVo) {
-        LinkedList<BidTeukseongDaoPivot> bidTeukseongDtoListPivot = bidMapper.selectBidTeukseongListPivot(bidTeukseongVo);
+    public List<BidTeukseongDaoPivot> selectBidTeukseongListPivot(HashMap<String, String> paramMap) {
+        LinkedList<BidTeukseongDaoPivot> bidTeukseongDtoListPivot = bidMapper.selectBidTeukseongListPivot(paramMap);
         return bidTeukseongDtoListPivot;
     }
     public int insertBidTeukseong(List<BidTeukseongVo> bidTeukseongVoList) {
@@ -65,12 +67,12 @@ public class BidServiceImpl implements BidService{
         }
         return result;
     }
-    public List<BidDetailDao> selectBidDetailList(BidDetailVo detailVo) {
-        LinkedList<BidDetailDao> bidDetailDaos = bidMapper.selectBidDetailList(detailVo);
+    public List<BidDetailDao> selectBidDetailList(HashMap<String, String> paramMap) {
+        LinkedList<BidDetailDao> bidDetailDaos = bidMapper.selectBidDetailList(paramMap);
         return bidDetailDaos;
     }
-    public List<BidDetailDaoPivot> selectBidDetailListPivot(BidDetailVo detailVo){
-        LinkedList<BidDetailDaoPivot> bidDetailDtosPivot = bidMapper.selectBidDetailListPivot(detailVo);
+    public List<BidDetailDaoPivot> selectBidDetailListPivot(HashMap<String, String> paramMap){
+        LinkedList<BidDetailDaoPivot> bidDetailDtosPivot = bidMapper.selectBidDetailListPivot(paramMap);
         return bidDetailDtosPivot;
     }
     public int deleteBidDetail(BidDetailVo detailVo) {

@@ -5,12 +5,13 @@ import bid.service.BidService;
 import bid.vo.BidDetailVo;
 import bid.vo.BidMasterVo;
 import bid.vo.BidTeukseongVo;
-import com.fasterxml.jackson.core.JsonProcessingException;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -21,9 +22,9 @@ public class BidRestController {
     private final BidService bidService;
 
     @GetMapping("/master")
-    public ResponseEntity<?> selectBidMasterList(@RequestParam BidMasterVo bidMasterVo) {
-        List<BidMasterDao> bidMasters = bidService.selectBidMasterList(bidMasterVo);
-        return new ResponseEntity<List<BidMasterDao>>(bidMasters, HttpStatus.OK);
+    public ResponseEntity<?> selectBidMasterList(@RequestParam HashMap<String, String> paramMap) {
+        BidMasterDao bidMasters = bidService.selectBidMasterList(paramMap);
+        return new ResponseEntity<BidMasterDao>(bidMasters, HttpStatus.OK);
     }
     @PostMapping("/master")
     public ResponseEntity<?> insertBidMaster(@RequestBody BidMasterVo bidMasterVo) {
@@ -47,13 +48,13 @@ public class BidRestController {
         return new ResponseEntity<Integer>(result, HttpStatus.OK);
     }
     @GetMapping("/teukseong")
-    public ResponseEntity<?> selectBidTeukseongList(@RequestParam BidTeukseongVo bidTeukseongVo) {
-        List<BidTeukseongDao> bidTeukseongVoList = bidService.selectBidTeukseongList(bidTeukseongVo);
+    public ResponseEntity<?> selectBidTeukseongList(@RequestParam HashMap<String, String> paramMap) {
+        List<BidTeukseongDao> bidTeukseongVoList = bidService.selectBidTeukseongList(paramMap);
         return new ResponseEntity<List<BidTeukseongDao>>(bidTeukseongVoList, HttpStatus.OK);
     }
     @GetMapping("/teukseong/pivot")
-    public ResponseEntity<?> selectBidTeukseongListPivot(@RequestParam BidTeukseongVo bidTeukseongVo) {
-        List<BidTeukseongDaoPivot> bidTeukseongVoListPivot = bidService.selectBidTeukseongListPivot(bidTeukseongVo);
+    public ResponseEntity<?> selectBidTeukseongListPivot(@RequestParam HashMap<String, String> paramMap) {
+        List<BidTeukseongDaoPivot> bidTeukseongVoListPivot = bidService.selectBidTeukseongListPivot(paramMap);
         return new ResponseEntity<List<BidTeukseongDaoPivot>>(bidTeukseongVoListPivot, HttpStatus.OK);
     }
     @PostMapping("/teukseong")
@@ -71,13 +72,13 @@ public class BidRestController {
         return new ResponseEntity<Integer>(result, HttpStatus.OK);
     }
     @GetMapping("/detail")
-    public ResponseEntity<?> selectBidDetailList(@RequestParam BidDetailVo detailVo) {
-        List<BidDetailDao> bidDetailDaos = bidService.selectBidDetailList(detailVo);
+    public ResponseEntity<?> selectBidDetailList(@RequestParam HashMap<String, String> paramMap) {
+        List<BidDetailDao> bidDetailDaos = bidService.selectBidDetailList(paramMap);
         return new ResponseEntity<List<BidDetailDao>>(bidDetailDaos, HttpStatus.OK);
     }
     @GetMapping("/detail/pivot")
-    public ResponseEntity<?> selectBidDetailListPivot(@RequestParam BidDetailVo detailVo) throws JsonProcessingException {
-        List<BidDetailDaoPivot> bidDetailDtosPivot = bidService.selectBidDetailListPivot(detailVo);
+    public ResponseEntity<?> selectBidDetailListPivot(@RequestParam HashMap<String, String> paramMap) {
+        List<BidDetailDaoPivot> bidDetailDtosPivot = bidService.selectBidDetailListPivot(paramMap);
         return new ResponseEntity<List<BidDetailDaoPivot>>(bidDetailDtosPivot, HttpStatus.OK);
     }
     @PostMapping("/detail")
