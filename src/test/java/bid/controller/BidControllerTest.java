@@ -1,16 +1,22 @@
 package bid.controller;
 
+import bid.vo.BidMasterVo;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.handler;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -25,8 +31,66 @@ public class BidControllerTest {
     private MockMvc mockMvc;
 
     @Test
+    @Transactional
+    void 입찰_마스터_추가() throws Exception {
+        BidMasterVo bidMasterVo = BidMasterVo.builder()
+        .guraeDate("20230126")
+        .baljunkiCompanyCode("00001")
+        .baljunkiGubnCode("01")
+        .baljunkiId("BAJUNKI001")
+        .teukiRemk("특이사항")
+        .baljunkiCompanySign("발전기회사서명이미지주소")
+        .submitEmplNumb("vtw1606")
+        .submitEmplSign("접수자서명이미지주소")
+        .build();
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String bidMasterVoJson = objectMapper.writeValueAsString(bidMasterVo);
+        ResultActions resultActions;
+        resultActions = mockMvc.perform(
+                post("/bid/master")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(bidMasterVoJson)
+                .accept(MediaType.APPLICATION_JSON)
+        );
+
+        resultActions.andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(handler().handlerType(BidRestController.class))
+                .andExpect(handler().methodName("insertBidMaster"))
+        ;
+
+        resultActions = mockMvc.perform(
+                get("/bid/master")
+                .param("guraeDate", bidMasterVo.getGuraeDate())
+                .param("baljunkiCompanyCode", bidMasterVo.getBaljunkiCompanyCode())
+                .param("baljunkiGubnCode", bidMasterVo.getBaljunkiGubnCode())
+                .param("baljunkiId", bidMasterVo.getBaljunkiId())
+                .accept(MediaType.APPLICATION_JSON)
+        );
+
+        resultActions.andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(handler().handlerType(BidRestController.class))
+                .andExpect(handler().methodName("selectBidMaster"))
+                .andExpect(jsonPath("$.guraeDate", is(bidMasterVo.getGuraeDate())))
+                .andExpect(jsonPath("$.baljunkiCompanyCode", is(bidMasterVo.getBaljunkiCompanyCode())))
+                .andExpect(jsonPath("$.baljunkiGubnCode", is(bidMasterVo.getBaljunkiGubnCode())))
+                .andExpect(jsonPath("$.baljunkiId", is(bidMasterVo.getBaljunkiId())))
+                .andExpect(jsonPath("$.teukiRemk", is(bidMasterVo.getTeukiRemk())))
+                .andExpect(jsonPath("$.baljunkiCompanySign", is(bidMasterVo.getBaljunkiCompanySign())))
+                .andExpect(jsonPath("$.submitEmplNumb", is(bidMasterVo.getSubmitEmplNumb())))
+                .andExpect(jsonPath("$.submitEmplSign", is(bidMasterVo.getSubmitEmplSign())))
+        ;
+
+    }
+
+    @Test
     void 입찰_마스터_조회() throws Exception {
         HashMap<String, String> stringStringHashMap = new HashMap<>();
+
+        BidMasterVo.BidMasterVoBuilder builder = BidMasterVo.builder();
+
         stringStringHashMap.put("guraeDate", "20230126");
         stringStringHashMap.put("baljunkiCompanyCode", "00001");
         stringStringHashMap.put("baljunkiGubnCode", "01");
@@ -69,7 +133,8 @@ public class BidControllerTest {
         resultActions.andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(handler().handlerType(BidRestController.class))
-                .andExpect(handler().methodName("selectBidTeukseongList")) 
+                .andExpect(handler().methodName("selectBidTeukseongList"))
+                .andExpect(jsonPath("$").isArray())
                 .andExpect(jsonPath("$[0].bidId", is(bidId))) //pk
                 .andExpect(jsonPath("$[0].teukseongBunryuCode", is("01"))) //pk
                 .andExpect(jsonPath("$[0].teukseongBunryuGubnCode", is("01"))) //pk
@@ -91,6 +156,7 @@ public class BidControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(handler().handlerType(BidRestController.class))
                 .andExpect(handler().methodName("selectBidTeukseongListPivot"))
+                .andExpect(jsonPath("$").isArray())
                 .andExpect(jsonPath("$[0].bidId", is(bidId))) //pk
                 .andExpect(jsonPath("$[0].teukseongBunryuCode", is("01"))) //pk
                 .andExpect(jsonPath("$[0].submit_VAL_01_01", is("8")))
@@ -114,6 +180,7 @@ public class BidControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(handler().handlerType(BidRestController.class))
                 .andExpect(handler().methodName("selectBidDetailList"))
+                .andExpect(jsonPath("$").isArray())
                 .andExpect(jsonPath("$[0].bidId", is(bidId))) //pk
                 .andExpect(jsonPath("$[0].bidGubnCode", is(bidGubnCode))) //pk
                 .andExpect(jsonPath("$[0].guraeTimeGubnCode").exists()) //pk
@@ -138,6 +205,7 @@ public class BidControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(handler().handlerType(BidRestController.class))
                 .andExpect(handler().methodName("selectBidDetailListPivot"))
+                .andExpect(jsonPath("$").isArray())
                 .andExpect(jsonPath("$[0].bidId", is(bidId))) //pk
                 .andExpect(jsonPath("$[0].bidGubnCode", is(bidGubnCode))) //pk
                 .andExpect(jsonPath("$[0].gubnCode", is("01"))) //pk
