@@ -17,11 +17,11 @@ public class BidMasterVo {
     private String submitEmplNumb;
     private String submitEmplSign;
 
-    public BidMasterVo() {
+    private BidMasterVo() {
     }
 
     @Builder
-    public BidMasterVo(String bidId, String guraeDate, String baljunkiCompanyCode, String baljunkiGubnCode, String baljunkiId, String teukiRemk, String baljunkiCompanySign, String submitDate, String submitTime, String submitEmplNumb, String submitEmplSign) {
+    private BidMasterVo(String bidId, String guraeDate, String baljunkiCompanyCode, String baljunkiGubnCode, String baljunkiId, String teukiRemk, String baljunkiCompanySign, String submitDate, String submitTime, String submitEmplNumb, String submitEmplSign) {
         this.bidId = bidId;
         this.guraeDate = guraeDate;
         this.baljunkiCompanyCode = baljunkiCompanyCode;
