@@ -1,13 +1,9 @@
 package bid.vo;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.*;
 
 @Getter
 @ToString
-@Builder
 public class BidMasterVo {
     private String bidId;
     private String guraeDate;
@@ -21,5 +17,21 @@ public class BidMasterVo {
     private String submitEmplNumb;
     private String submitEmplSign;
 
+    public BidMasterVo() {
+    }
 
+    @Builder
+    public BidMasterVo(String bidId, String guraeDate, String baljunkiCompanyCode, String baljunkiGubnCode, String baljunkiId, String teukiRemk, String baljunkiCompanySign, String submitDate, String submitTime, String submitEmplNumb, String submitEmplSign) {
+        this.bidId = bidId;
+        this.guraeDate = guraeDate;
+        this.baljunkiCompanyCode = baljunkiCompanyCode;
+        this.baljunkiGubnCode = baljunkiGubnCode;
+        this.baljunkiId = baljunkiId;
+        this.teukiRemk = teukiRemk;
+        this.baljunkiCompanySign = baljunkiCompanySign;
+        this.submitDate = submitDate;
+        this.submitTime = submitTime;
+        this.submitEmplNumb = submitEmplNumb;
+        this.submitEmplSign = submitEmplSign;
+    }
 }
