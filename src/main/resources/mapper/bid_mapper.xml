@@ -15,7 +15,7 @@
         <result property="submitEmplNumb" column="SUBMIT_EMPL_NUMB"/>
         <result property="submitEmplSign" column="SUBMIT_EMPL_SIGN"/>
     </resultMap>
-    <select id="selectBidMasterList" parameterType="bid.vo.BidMasterVo" resultMap="bidMasterDao">
+    <select id="selectBidMaster" parameterType="bid.vo.BidMasterVo" resultMap="bidMasterDao">
          SELECT BID_ID,
                 GURAE_DATE,
                 BALJUNKI_COMPANY_CODE,

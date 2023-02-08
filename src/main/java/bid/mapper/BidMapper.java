@@ -11,7 +11,7 @@ import java.util.LinkedList;
 
 @Mapper
 public interface BidMapper {
-    BidMasterDao selectBidMasterList(HashMap<String, String> paramMap);
+    BidMasterDao selectBidMaster(HashMap<String, String> paramMap);
     int insertBidMaster(BidMasterVo bidMasterVo);
     int updateBidMaster(BidMasterVo bidMasterVo);
     int deleteBidMaster(BidMasterVo bidMasterVo);

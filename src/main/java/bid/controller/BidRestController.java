@@ -22,8 +22,8 @@ public class BidRestController {
     private final BidService bidService;
 
     @GetMapping("/master")
-    public ResponseEntity<?> selectBidMasterList(@RequestParam HashMap<String, String> paramMap) {
-        BidMasterDao bidMasters = bidService.selectBidMasterList(paramMap);
+    public ResponseEntity<?> selectBidMaster(@RequestParam HashMap<String, String> paramMap) {
+        BidMasterDao bidMasters = bidService.selectBidMaster(paramMap);
         return new ResponseEntity<BidMasterDao>(bidMasters, HttpStatus.OK);
     }
     @PostMapping("/master")

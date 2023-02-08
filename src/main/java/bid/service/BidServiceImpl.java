@@ -19,8 +19,8 @@ public class BidServiceImpl implements BidService{
         this.bidMapper = bidMapper;
     }
 
-    public BidMasterDao selectBidMasterList(HashMap<String, String> paramMap) {
-        BidMasterDao bidMasterDao = bidMapper.selectBidMasterList(paramMap);
+    public BidMasterDao selectBidMaster(HashMap<String, String> paramMap) {
+        BidMasterDao bidMasterDao = bidMapper.selectBidMaster(paramMap);
         return bidMasterDao;
     }
     public int insertBidMaster(BidMasterVo bidMasterVo) {

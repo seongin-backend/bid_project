@@ -10,7 +10,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public interface BidService {
-    BidMasterDao selectBidMasterList(HashMap<String, String> paramMap);
+    BidMasterDao selectBidMaster(HashMap<String, String> paramMap);
     int insertBidMaster(BidMasterVo bidMasterVo);
     int updateBidMaster(BidMasterVo bidMasterVo);
     int deleteBidMaster(BidMasterVo bidMasterVo);
