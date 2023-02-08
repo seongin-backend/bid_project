@@ -1,8 +1,6 @@
 package bid.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -98,7 +96,7 @@ public class BidControllerTest {
                 .andExpect(jsonPath("$[0].submit_VAL_01_01", is("8")))
                 .andExpect(jsonPath("$[0].submit_VAL_01_02", is("3")))
                 .andExpect(jsonPath("$[0].update_REMK_01_01", is("시간 더 걸림")))
-                .andExpect(jsonPath("$[0].update_REMK_01_02", is("시간 줄음")));
+                .andExpect(jsonPath("$[0].update_REMK_01_02", is("시간 줄음")))
         ;
     }
 
@@ -123,6 +121,30 @@ public class BidControllerTest {
                 .andExpect(jsonPath("$[0].gubnCode").exists()) //pk
                 .andExpect(jsonPath("$[0].gubnName").exists())
                 .andExpect(jsonPath("$[0].submitVal").exists())
+        ;
+    }
+
+    @Test
+    void 입찰_디테일_조회_피벗() throws Exception {
+        String bidId = "20230126_00001_01_BAJUNKI001";
+        String bidGubnCode = "01";
+        ResultActions resultActions = mockMvc.perform(
+                get("/bid/detail/pivot")
+                        .param("bidId", bidId)
+                        .param("bidGubnCode", bidGubnCode)
+                        .accept(MediaType.APPLICATION_JSON)
+        );
+        resultActions.andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(handler().handlerType(BidRestController.class))
+                .andExpect(handler().methodName("selectBidDetailListPivot"))
+                .andExpect(jsonPath("$[0].bidId", is(bidId))) //pk
+                .andExpect(jsonPath("$[0].bidGubnCode", is(bidGubnCode))) //pk
+                .andExpect(jsonPath("$[0].gubnCode", is("01"))) //pk
+                .andExpect(jsonPath("$[0].gubnName", is("공급가능용량")))
+                .andExpect(jsonPath("$[0].d_1", is("100")))
+                .andExpect(jsonPath("$[0].d_2", is("200")))
+                .andExpect(jsonPath("$[0].d_3", is("300")))
         ;
     }
 
