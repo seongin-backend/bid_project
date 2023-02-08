@@ -66,6 +66,27 @@ public class BidControllerTest {
         ;
     }
 
+    @Test
+    void 입찰_특성_조회_피벗() throws Exception {
+        String bidId = "20230126_00001_01_BAJUNKI001";
+        ResultActions resultActions = mockMvc.perform(
+                get("/bid/teukseong/pivot")
+                        .param("bidId", bidId)
+                        .accept(MediaType.APPLICATION_JSON)
+        );
+        resultActions.andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(handler().handlerType(BidRestController.class))
+                .andExpect(handler().methodName("selectBidTeukseongListPivot"))
+                .andExpect(jsonPath("$[0].bidId", is("20230126_00001_01_BAJUNKI001"))) //pk
+                .andExpect(jsonPath("$[0].teukseongBunryuCode", is("01"))) //pk
+                .andExpect(jsonPath("$[0].submit_VAL_01_01", is("8")))
+                .andExpect(jsonPath("$[0].submit_VAL_01_02", is("3")))
+                .andExpect(jsonPath("$[0].update_REMK_01_01", is("시간 더 걸림")))
+                .andExpect(jsonPath("$[0].update_REMK_01_02", is("시간 줄음")));
+        ;
+    }
+
 
 }
 
