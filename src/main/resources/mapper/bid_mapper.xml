@@ -158,7 +158,7 @@
         FROM TB_BID_DETAIL
         WHERE BID_ID = #{bidId}
           AND BID_GUBN_CODE = #{bidGubnCode}
-        ORDER BY BID_ID,BID_GUBN_CODE,GURAE_TIME_GUBN_CODE,GURAE_TIME,GUBN_CODE
+        ORDER BY BID_ID,BID_GUBN_CODE
     </select>
     <resultMap type="bid.dao.BidDetailDaoPivot" id="bidDetailDaoPivot">
         <result property="bidId" column="BID_ID"/>
