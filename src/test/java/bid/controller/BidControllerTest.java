@@ -3,19 +3,15 @@ package bid.controller;
 import bid.vo.BidMasterVo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.HashMap;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -47,10 +43,11 @@ public class BidControllerTest {
                 .submitEmplNumb("vtw1606")
                 .submitEmplSign("접수자서명이미지주소")
                 .build();
+
     }
 
     @Test
-    void 입찰_마스터_추가() throws Exception {
+    void 입찰_마스터_추가_테스트() throws Exception {
 
         ObjectMapper objectMapper = new ObjectMapper();
         String bidMasterVoJson = objectMapper.writeValueAsString(bidMasterVo);
@@ -81,12 +78,15 @@ public class BidControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(handler().handlerType(BidRestController.class))
                 .andExpect(handler().methodName("selectBidMaster"))
+                .andExpect(jsonPath("$.bidId", is("20230126_00001_01_BAJUNKI001"))) //PK채번 테스트
                 .andExpect(jsonPath("$.guraeDate", is(bidMasterVo.getGuraeDate())))
                 .andExpect(jsonPath("$.baljunkiCompanyCode", is(bidMasterVo.getBaljunkiCompanyCode())))
                 .andExpect(jsonPath("$.baljunkiGubnCode", is(bidMasterVo.getBaljunkiGubnCode())))
                 .andExpect(jsonPath("$.baljunkiId", is(bidMasterVo.getBaljunkiId())))
                 .andExpect(jsonPath("$.teukiRemk", is(bidMasterVo.getTeukiRemk())))
                 .andExpect(jsonPath("$.baljunkiCompanySign", is(bidMasterVo.getBaljunkiCompanySign())))
+                .andExpect(jsonPath("$.submitDate").exists())
+                .andExpect(jsonPath("$.submitTime").exists())
                 .andExpect(jsonPath("$.submitEmplNumb", is(bidMasterVo.getSubmitEmplNumb())))
                 .andExpect(jsonPath("$.submitEmplSign", is(bidMasterVo.getSubmitEmplSign())))
         ;
@@ -94,79 +94,28 @@ public class BidControllerTest {
 
     @Test
     void 입찰_마스터_조회() throws Exception {
-        HashMap<String, String> stringStringHashMap = new HashMap<>();
 
-        BidMasterVo.BidMasterVoBuilder builder = BidMasterVo.builder();
-
-        stringStringHashMap.put("guraeDate", "20230126");
-        stringStringHashMap.put("baljunkiCompanyCode", "00001");
-        stringStringHashMap.put("baljunkiGubnCode", "01");
-        stringStringHashMap.put("baljunkiId", "BAJUNKI001");
         ResultActions resultActions = mockMvc.perform(
-                get("/bid/master")
-                        .param("guraeDate", stringStringHashMap.get("guraeDate"))
-                        .param("baljunkiCompanyCode", stringStringHashMap.get("baljunkiCompanyCode"))
-                        .param("baljunkiGubnCode", stringStringHashMap.get("baljunkiGubnCode"))
-                        .param("baljunkiId", stringStringHashMap.get("baljunkiId"))
-                        .accept(MediaType.APPLICATION_JSON)
-        );
-        resultActions.andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(handler().handlerType(BidRestController.class))
-                .andExpect(handler().methodName("selectBidMasterList"))
-                .andExpect(jsonPath("$.bidId", is("20230126_00001_01_BAJUNKI001"))) //PK채번 테스트
-                .andExpect(jsonPath("$.guraeDate", is(stringStringHashMap.get("guraeDate"))))
-                .andExpect(jsonPath("$.baljunkiCompanyCode", is(stringStringHashMap.get("baljunkiCompanyCode"))))
-                .andExpect(jsonPath("$.baljunkiGubnCode", is(stringStringHashMap.get("baljunkiGubnCode"))))
-                .andExpect(jsonPath("$.baljunkiId", is(stringStringHashMap.get("baljunkiId"))))
-
-                .andExpect(jsonPath("$.teukiRemk", is("특이사항")))
-                .andExpect(jsonPath("$.baljunkiCompanySign", is("발전기회사서명이미지주소")))
-                .andExpect(jsonPath("$.submitDate").exists())
-                .andExpect(jsonPath("$.submitTime").exists())
-                .andExpect(jsonPath("$.submitEmplNumb", is("vtw1606")))
-                .andExpect(jsonPath("$.submitEmplSign", is("접수자서명이미지주소")))
-        ;
-    }
-
-    @Test
-    void 입찰_마스터_() throws Exception {
-
-        ObjectMapper objectMapper = new ObjectMapper();
-        String bidMasterVoJson = objectMapper.writeValueAsString(bidMasterVo);
-        ResultActions resultActions;
-        resultActions = mockMvc.perform(
-                post("/bid/master")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(bidMasterVoJson)
-                        .accept(MediaType.APPLICATION_JSON)
-        );
-
-        resultActions.andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(handler().handlerType(BidRestController.class))
-                .andExpect(handler().methodName("insertBidMaster"))
-        ;
-
-        resultActions = mockMvc.perform(
                 get("/bid/master")
                         .param("guraeDate", bidMasterVo.getGuraeDate())
                         .param("baljunkiCompanyCode", bidMasterVo.getBaljunkiCompanyCode())
                         .param("baljunkiGubnCode", bidMasterVo.getBaljunkiGubnCode())
-                        .param("baljunkiId", bidMasterVo.getBaljunkiId())
+                        .param("baljunkiId",bidMasterVo.getBaljunkiId())
                         .accept(MediaType.APPLICATION_JSON)
         );
-
         resultActions.andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(handler().handlerType(BidRestController.class))
                 .andExpect(handler().methodName("selectBidMaster"))
+                .andExpect(jsonPath("$.bidId", is("20230126_00001_01_BAJUNKI001"))) //PK채번 테스트
                 .andExpect(jsonPath("$.guraeDate", is(bidMasterVo.getGuraeDate())))
                 .andExpect(jsonPath("$.baljunkiCompanyCode", is(bidMasterVo.getBaljunkiCompanyCode())))
                 .andExpect(jsonPath("$.baljunkiGubnCode", is(bidMasterVo.getBaljunkiGubnCode())))
                 .andExpect(jsonPath("$.baljunkiId", is(bidMasterVo.getBaljunkiId())))
                 .andExpect(jsonPath("$.teukiRemk", is(bidMasterVo.getTeukiRemk())))
                 .andExpect(jsonPath("$.baljunkiCompanySign", is(bidMasterVo.getBaljunkiCompanySign())))
+                .andExpect(jsonPath("$.submitDate").exists())
+                .andExpect(jsonPath("$.submitTime").exists())
                 .andExpect(jsonPath("$.submitEmplNumb", is(bidMasterVo.getSubmitEmplNumb())))
                 .andExpect(jsonPath("$.submitEmplSign", is(bidMasterVo.getSubmitEmplSign())))
         ;
