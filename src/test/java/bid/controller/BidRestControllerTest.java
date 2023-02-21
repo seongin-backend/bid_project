@@ -24,7 +24,7 @@ import static org.hamcrest.Matchers.is;
 @SpringBootTest
 @AutoConfigureMockMvc
 @Transactional
-public class BidControllerTest {
+public class BidRestControllerTest {
 
     @Autowired
     private MockMvc mockMvc;

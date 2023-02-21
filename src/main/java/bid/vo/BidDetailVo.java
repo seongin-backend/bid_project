@@ -6,7 +6,6 @@ import lombok.ToString;
 
 @Getter
 @ToString
-@Builder
 public class BidDetailVo {
     private String bidId;
     private String bidGubnCode;
@@ -15,4 +14,18 @@ public class BidDetailVo {
     private String gubnCode;
     private String gubnName;
     private String submitVal;
+
+    public BidDetailVo() {
+    }
+
+    @Builder
+    public BidDetailVo(String bidId, String bidGubnCode, String guraeTimeGubnCode, String guraeTime, String gubnCode, String gubnName, String submitVal) {
+        this.bidId = bidId;
+        this.bidGubnCode = bidGubnCode;
+        this.guraeTimeGubnCode = guraeTimeGubnCode;
+        this.guraeTime = guraeTime;
+        this.gubnCode = gubnCode;
+        this.gubnName = gubnName;
+        this.submitVal = submitVal;
+    }
 }
