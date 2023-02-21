@@ -165,61 +165,87 @@
         <result property="bidGubnCode" column="BID_GUBN_CODE"/>
         <result property="gubnCode" column="GUBN_CODE"/>
         <result property="gubnName" column="GUBN_NAME"/>
-        <result property="dMinus1_19" column="'D-1_19'"/>
-        <result property="dMinus1_20" column="'D-1_20'"/>
-        <result property="dMinus1_21" column="'D-1_21'"/>
-        <result property="dMinus1_22" column="'D-1_22'"/>
-        <result property="dMinus1_23" column="'D-1_23'"/>
-        <result property="dMinus1_24" column="'D-1_24'"/>
-        <result property="d_1" column="'D_1'"/>
-        <result property="d_2" column="'D_2'"/>
-        <result property="d_3" column="'D_3'"/>
-        <result property="d_4" column="'D_4'"/>
-        <result property="d_5" column="'D_5'"/>
-        <result property="d_6" column="'D_6'"/>
-        <result property="d_7" column="'D_7'"/>
-        <result property="d_8" column="'D_8'"/>
-        <result property="d_9" column="'D_9'"/>
-        <result property="d_10" column="'D1_10'"/>
-        <result property="d_11" column="'D1_11'"/>
-        <result property="d_12" column="'D1_12'"/>
-        <result property="d_13" column="'D1_13'"/>
-        <result property="d_14" column="'D1_14'"/>
-        <result property="d_15" column="'D1_15'"/>
-        <result property="d_16" column="'D1_16'"/>
-        <result property="d_17" column="'D1_17'"/>
-        <result property="d_18" column="'D1_18'"/>
-        <result property="d_19" column="'D1_19'"/>
-        <result property="d_20" column="'D1_20'"/>
-        <result property="d_21" column="'D1_21'"/>
-        <result property="d_22" column="'D1_22'"/>
-        <result property="d_23" column="'D1_23'"/>
-        <result property="d_24" column="'D1_24'"/>
-        <result property="dPlus1_1" column="'D+1_1'"/>
-        <result property="dPlus1_2" column="'D+1_2'"/>
-        <result property="dPlus1_3" column="'D+1_3'"/>
-        <result property="dPlus1_4" column="'D+1_4'"/>
+        <result property="dMinus1_19" column="D-1_19"/>
+        <result property="dMinus1_20" column="D-1_20"/>
+        <result property="dMinus1_21" column="D-1_21"/>
+        <result property="dMinus1_22" column="D-1_22"/>
+        <result property="dMinus1_23" column="D-1_23"/>
+        <result property="dMinus1_24" column="D-1_24"/>
+        <result property="d_1" column="D_1"/>
+        <result property="d_2" column="D_2"/>
+        <result property="d_3" column="D_3"/>
+        <result property="d_4" column="D_4"/>
+        <result property="d_5" column="D_5"/>
+        <result property="d_6" column="D_6"/>
+        <result property="d_7" column="D_7"/>
+        <result property="d_8" column="D_8"/>
+        <result property="d_9" column="D_9"/>
+        <result property="d_10" column="D1_10"/>
+        <result property="d_11" column="D1_11"/>
+        <result property="d_12" column="D1_12"/>
+        <result property="d_13" column="D1_13"/>
+        <result property="d_14" column="D1_14"/>
+        <result property="d_15" column="D1_15"/>
+        <result property="d_16" column="D1_16"/>
+        <result property="d_17" column="D1_17"/>
+        <result property="d_18" column="D1_18"/>
+        <result property="d_19" column="D1_19"/>
+        <result property="d_20" column="D1_20"/>
+        <result property="d_21" column="D1_21"/>
+        <result property="d_22" column="D1_22"/>
+        <result property="d_23" column="D1_23"/>
+        <result property="d_24" column="D1_24"/>
+        <result property="dPlus1_1" column="D+1_1"/>
+        <result property="dPlus1_2" column="D+1_2"/>
+        <result property="dPlus1_3" column="D+1_3"/>
+        <result property="dPlus1_4" column="D+1_4"/>
     </resultMap>
     <select id="selectBidDetailListPivot" resultMap="bidDetailDaoPivot" parameterType="bid.vo.BidDetailVo" >
-        SELECT *
-        FROM (
-            SELECT BID_ID,
-                    BID_GUBN_CODE,
-                    GUBN_CODE,
-                    GUBN_NAME,
-                    GURAE_TIME_GUBN_CODE || '_' || GURAE_TIME GUBN_AND_TIME,
-                    SUBMIT_VAL
-            FROM TB_BID_DETAIL
-           WHERE BID_ID = #{bidId}
-             AND BID_GUBN_CODE = #{bidGubnCode}
-        )
-        PIVOT (
-            MAX(SUBMIT_VAL) FOR GUBN_AND_TIME IN('D-1_19', 'D-1_20','D-1_21','D-1_22','D-1_23','D-1_24'
-            , 'D_1', 'D_2', 'D_3', 'D_4', 'D_5', 'D_6', 'D_7', 'D_8', 'D_9', 'D_10', 'D_11', 'D_12'
-            , 'D_13', 'D_14', 'D_15', 'D_16', 'D_17', 'D_18', 'D_19', 'D_20', 'D_21', 'D_22', 'D_23', 'D_24'
-            , 'D+1_1', 'D+1_2', 'D+1_3', 'D+1_4'
+        SELECT BID_ID, BID_GUBN_CODE, GUBN_CODE, GUBN_NAME, MAX("D-1_19") "D-1_19", MAX("D-1_20") "D-1_20", MAX("D-1_21") "D-1_21", MAX("D-1_22") "D-1_22", MAX("D-1_23") "D-1_23", MAX("D-1_24") "D-1_24"
+             , MAX("D_1") "D_1", MAX("D_2") "D_2", MAX("D_3") "D_3", MAX("D_4") "D_4", MAX("D_5") "D_5", MAX("D_6") "D_6", MAX("D_7") "D_7", MAX("D_8") "D_8", MAX("D_9") "D_9", MAX("D_10") "D_10", MAX("D_11") "D_11", MAX("D_12") "D_12"
+             , MAX("D_13") "D_13", MAX("D_14") "D_14", MAX("D_15") "D_15", MAX("D_16") "D_16", MAX("D_17") "D_17", MAX("D_18") "D_18", MAX("D_19") "D_19", MAX("D_20") "D_20", MAX("D_21") "D_21", MAX("D_22") "D_22", MAX("D_23") "D_23", MAX("D_24") "D_24"
+             , MAX("D+1_1") "D+1_1", MAX("D+1_2") "D+1_2", MAX("D+1_3") "D+1_3", MAX("D+1_4") "D+1_4"
+            FROM (
+                SELECT BID_ID, BID_GUBN_CODE, GUBN_CODE, GUBN_NAME, GURAE_TIME_GUBN_CODE || '_' || GURAE_TIME GURAE_TIME_GUBN_CODE_TIME
+                    , CASE WHEN GURAE_TIME_GUBN_CODE || '_' || GURAE_TIME = 'D-1_19' THEN SUBMIT_VAL END "D-1_19"
+                    , CASE WHEN GURAE_TIME_GUBN_CODE || '_' || GURAE_TIME = 'D-1_20' THEN SUBMIT_VAL END "D-1_20"
+                    , CASE WHEN GURAE_TIME_GUBN_CODE || '_' || GURAE_TIME = 'D-1_21' THEN SUBMIT_VAL END "D-1_21"
+                    , CASE WHEN GURAE_TIME_GUBN_CODE || '_' || GURAE_TIME = 'D-1_22' THEN SUBMIT_VAL END "D-1_22"
+                    , CASE WHEN GURAE_TIME_GUBN_CODE || '_' || GURAE_TIME = 'D-1_23' THEN SUBMIT_VAL END "D-1_23"
+                    , CASE WHEN GURAE_TIME_GUBN_CODE || '_' || GURAE_TIME = 'D-1_24' THEN SUBMIT_VAL END "D-1_24"
+                    , CASE WHEN GURAE_TIME_GUBN_CODE || '_' || GURAE_TIME = 'D_1' THEN SUBMIT_VAL END "D_1"
+                    , CASE WHEN GURAE_TIME_GUBN_CODE || '_' || GURAE_TIME = 'D_2' THEN SUBMIT_VAL END "D_2"
+                    , CASE WHEN GURAE_TIME_GUBN_CODE || '_' || GURAE_TIME = 'D_3' THEN SUBMIT_VAL END "D_3"
+                    , CASE WHEN GURAE_TIME_GUBN_CODE || '_' || GURAE_TIME = 'D_4' THEN SUBMIT_VAL END "D_4"
+                    , CASE WHEN GURAE_TIME_GUBN_CODE || '_' || GURAE_TIME = 'D_5' THEN SUBMIT_VAL END "D_5"
+                    , CASE WHEN GURAE_TIME_GUBN_CODE || '_' || GURAE_TIME = 'D_6' THEN SUBMIT_VAL END "D_6"
+                    , CASE WHEN GURAE_TIME_GUBN_CODE || '_' || GURAE_TIME = 'D_7' THEN SUBMIT_VAL END "D_7"
+                    , CASE WHEN GURAE_TIME_GUBN_CODE || '_' || GURAE_TIME = 'D_8' THEN SUBMIT_VAL END "D_8"
+                    , CASE WHEN GURAE_TIME_GUBN_CODE || '_' || GURAE_TIME = 'D_9' THEN SUBMIT_VAL END "D_9"
+                    , CASE WHEN GURAE_TIME_GUBN_CODE || '_' || GURAE_TIME = 'D_10' THEN SUBMIT_VAL END "D_10"
+                    , CASE WHEN GURAE_TIME_GUBN_CODE || '_' || GURAE_TIME = 'D_11' THEN SUBMIT_VAL END "D_11"
+                    , CASE WHEN GURAE_TIME_GUBN_CODE || '_' || GURAE_TIME = 'D_12' THEN SUBMIT_VAL END "D_12"
+                    , CASE WHEN GURAE_TIME_GUBN_CODE || '_' || GURAE_TIME = 'D_13' THEN SUBMIT_VAL END "D_13"
+                    , CASE WHEN GURAE_TIME_GUBN_CODE || '_' || GURAE_TIME = 'D_14' THEN SUBMIT_VAL END "D_14"
+                    , CASE WHEN GURAE_TIME_GUBN_CODE || '_' || GURAE_TIME = 'D_15' THEN SUBMIT_VAL END "D_15"
+                    , CASE WHEN GURAE_TIME_GUBN_CODE || '_' || GURAE_TIME = 'D_16' THEN SUBMIT_VAL END "D_16"
+                    , CASE WHEN GURAE_TIME_GUBN_CODE || '_' || GURAE_TIME = 'D_17' THEN SUBMIT_VAL END "D_17"
+                    , CASE WHEN GURAE_TIME_GUBN_CODE || '_' || GURAE_TIME = 'D_18' THEN SUBMIT_VAL END "D_18"
+                    , CASE WHEN GURAE_TIME_GUBN_CODE || '_' || GURAE_TIME = 'D_19' THEN SUBMIT_VAL END "D_19"
+                    , CASE WHEN GURAE_TIME_GUBN_CODE || '_' || GURAE_TIME = 'D_20' THEN SUBMIT_VAL END "D_20"
+                    , CASE WHEN GURAE_TIME_GUBN_CODE || '_' || GURAE_TIME = 'D_21' THEN SUBMIT_VAL END "D_21"
+                    , CASE WHEN GURAE_TIME_GUBN_CODE || '_' || GURAE_TIME = 'D_22' THEN SUBMIT_VAL END "D_22"
+                    , CASE WHEN GURAE_TIME_GUBN_CODE || '_' || GURAE_TIME = 'D_23' THEN SUBMIT_VAL END "D_23"
+                    , CASE WHEN GURAE_TIME_GUBN_CODE || '_' || GURAE_TIME = 'D_24' THEN SUBMIT_VAL END "D_24"
+                    , CASE WHEN GURAE_TIME_GUBN_CODE || '_' || GURAE_TIME = 'D+1_1' THEN SUBMIT_VAL END "D+1_1"
+                    , CASE WHEN GURAE_TIME_GUBN_CODE || '_' || GURAE_TIME = 'D+1_2' THEN SUBMIT_VAL END "D+1_2"
+                    , CASE WHEN GURAE_TIME_GUBN_CODE || '_' || GURAE_TIME = 'D+1_3' THEN SUBMIT_VAL END "D+1_3"
+                    , CASE WHEN GURAE_TIME_GUBN_CODE || '_' || GURAE_TIME = 'D+1_4' THEN SUBMIT_VAL END "D+1_4"
+                FROM TB_BID_DETAIL
+                WHERE BID_ID = '20230126_00001_01_BAJUNKI001'
+                AND BID_GUBN_CODE = '01'
             )
-        )
+        GROUP BY BID_ID, BID_GUBN_CODE, GUBN_CODE, GUBN_NAME
     </select>
     <insert id="insertBidDetail" parameterType="bid.vo.BidDetailVo" >
         INSERT INTO TB_BID_DETAIL(BID_ID,BID_GUBN_CODE,GURAE_TIME_GUBN_CODE
