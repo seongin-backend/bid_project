@@ -40,13 +40,13 @@
                                   , SUBMIT_DATE, SUBMIT_TIME, SUBMIT_EMPL_NUMB, SUBMIT_EMPL_SIGN)
         VALUES( #{guraeDate} || '_' || #{baljunkiCompanyCode}|| '_' || #{baljunkiGubnCode} || '_' || #{baljunkiId}, #{guraeDate}, #{baljunkiCompanyCode}
               , #{baljunkiGubnCode}, #{baljunkiId}, #{teukiRemk}, #{baljunkiCompanySign}
-              , TO_CHAR(SYSDATE, 'YYYYMMDD'),  TO_CHAR(SYSDATE, 'HH24MI'), #{submitEmplNumb},#{submitEmplSign})
+              , TO_CHAR(CURRENT_DATE, 'YYYYMMDD'),  TO_CHAR(CURRENT_DATE, 'HH24MI'), #{submitEmplNumb},#{submitEmplSign})
     </insert>
     <update id="updateBidMaster" parameterType="bid.vo.BidMasterVo" >
         UPDATE TB_BID_MASTER
            SET TEUKI_REMK = #{teukiRemk}
-             , SUBMIT_DATE = TO_CHAR(SYSDATE, 'YYYYMMDD')
-             , SUBMIT_TIME = TO_CHAR(SYSDATE, 'HH24MI')
+             , SUBMIT_DATE = TO_CHAR(CURRENT_DATE, 'YYYYMMDD')
+             , SUBMIT_TIME = TO_CHAR(CURRENT_DATE, 'HH24MI')
          WHERE BID_ID = #{bidId}
     </update>
     <delete id="deleteBidMaster" parameterType="bid.vo.BidMasterVo" >
