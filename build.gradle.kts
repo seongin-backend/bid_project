@@ -16,4 +16,6 @@ dependencies {
     implementation("org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:1.16")
     compileOnly("org.projectlombok:lombok:1.18.24")
     testImplementation("org.springframework.boot:spring-boot-starter-test:2.7.8")
+    // H2 Database
+    testImplementation("com.h2database:h2:2.1.214")
 }
