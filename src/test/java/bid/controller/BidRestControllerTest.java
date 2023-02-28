@@ -3,12 +3,12 @@ package bid.controller;
 import bid.vo.BidMasterVo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -24,8 +24,9 @@ import static org.hamcrest.Matchers.is;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@Transactional
 @ActiveProfiles("test")
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class BidRestControllerTest {
 
     @Autowired
@@ -33,7 +34,7 @@ public class BidRestControllerTest {
 
     BidMasterVo bidMasterVo;
 
-    @BeforeEach
+    @BeforeAll
     void setUp() {
         bidMasterVo = BidMasterVo.builder()
                 .guraeDate("20230126")
@@ -49,6 +50,7 @@ public class BidRestControllerTest {
     }
 
     @Test
+    @Order(1)
     void 입찰_마스터_추가_테스트() throws Exception {
 
         ObjectMapper objectMapper = new ObjectMapper();
@@ -56,9 +58,9 @@ public class BidRestControllerTest {
         ResultActions resultActions;
         resultActions = mockMvc.perform(
                 post("/bid/master")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(bidMasterVoJson)
-                .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(bidMasterVoJson)
+                        .accept(MediaType.APPLICATION_JSON)
         );
 
         resultActions.andDo(print())
@@ -69,11 +71,11 @@ public class BidRestControllerTest {
 
         resultActions = mockMvc.perform(
                 get("/bid/master")
-                .param("guraeDate", bidMasterVo.getGuraeDate())
-                .param("baljunkiCompanyCode", bidMasterVo.getBaljunkiCompanyCode())
-                .param("baljunkiGubnCode", bidMasterVo.getBaljunkiGubnCode())
-                .param("baljunkiId", bidMasterVo.getBaljunkiId())
-                .accept(MediaType.APPLICATION_JSON)
+                        .param("guraeDate", bidMasterVo.getGuraeDate())
+                        .param("baljunkiCompanyCode", bidMasterVo.getBaljunkiCompanyCode())
+                        .param("baljunkiGubnCode", bidMasterVo.getBaljunkiGubnCode())
+                        .param("baljunkiId", bidMasterVo.getBaljunkiId())
+                        .accept(MediaType.APPLICATION_JSON)
         );
 
         resultActions.andDo(print())
@@ -95,6 +97,7 @@ public class BidRestControllerTest {
     }
 
     @Test
+    @Order(2)
     void 입찰_마스터_조회() throws Exception {
 
         ResultActions resultActions = mockMvc.perform(
