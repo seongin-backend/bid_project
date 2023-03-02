@@ -298,8 +298,8 @@
                     , CASE WHEN GURAE_TIME_GUBN_CODE || '_' || GURAE_TIME = 'D+1_3' THEN SUBMIT_VAL END "D+1_3"
                     , CASE WHEN GURAE_TIME_GUBN_CODE || '_' || GURAE_TIME = 'D+1_4' THEN SUBMIT_VAL END "D+1_4"
                 FROM TB_BID_DETAIL
-                WHERE BID_ID = '20230126_00001_01_BAJUNKI001'
-                AND BID_GUBN_CODE = '01'
+                WHERE BID_ID = #{bidId}
+                AND BID_GUBN_CODE = #{bidGubnCode}
             )
         GROUP BY BID_ID, BID_GUBN_CODE, GUBN_CODE, GUBN_NAME
     </select>
