@@ -362,12 +362,11 @@ public class BidRestControllerTest {
     @Test
     @Order(8)
     void 입찰_디테일_조회_피벗() throws Exception {
-        String bidId = "20230126_00001_01_BAJUNKI001";
-        String bidGubnCode = "01";
+
         ResultActions resultActions = mockMvc.perform(
             get("/bid/detail/pivot")
-                .param("bidId", bidId)
-                .param("bidGubnCode", bidGubnCode)
+                .param("bidId", bidDetailVolinkedList.get(0).getBidId())
+                .param("bidGubnCode", bidDetailVolinkedList.get(0).getBidGubnCode())
                 .accept(MediaType.APPLICATION_JSON)
         );
         resultActions.andDo(print())
@@ -375,13 +374,12 @@ public class BidRestControllerTest {
             .andExpect(handler().handlerType(BidRestController.class))
             .andExpect(handler().methodName("selectBidDetailListPivot"))
             .andExpect(jsonPath("$").isArray())
-            .andExpect(jsonPath("$[0].bidId", is(bidId))) //pk
-            .andExpect(jsonPath("$[0].bidGubnCode", is(bidGubnCode))) //pk
-            .andExpect(jsonPath("$[0].gubnCode", is("01"))) //pk
-            .andExpect(jsonPath("$[0].gubnName", is("공급가능용량")))
-            .andExpect(jsonPath("$[0].d_1", is("100")))
-            .andExpect(jsonPath("$[0].d_2", is("200")))
-            .andExpect(jsonPath("$[0].d_3", is("300")))
+            .andExpect(jsonPath("$[0].bidId", is(bidDetailVolinkedList.get(0).getBidId()))) //pk
+            .andExpect(jsonPath("$[0].bidGubnCode", is(bidDetailVolinkedList.get(0).getBidGubnCode()))) //pk
+            .andExpect(jsonPath("$[0].gubnCode", is(bidDetailVolinkedList.get(0).getGubnCode()))) //pk
+            .andExpect(jsonPath("$[0].gubnName", is(bidDetailVolinkedList.get(0).getGubnName())))
+            .andExpect(jsonPath("$[0].dminus1_19", is("1900")))
+            .andExpect(jsonPath("$[0].dminus1_20", is("2000")))
         ;
     }
 
