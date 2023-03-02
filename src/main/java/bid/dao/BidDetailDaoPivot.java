@@ -42,7 +42,7 @@ public class BidDetailDaoPivot {
     private String d_22;
     private String d_23;
     private String d_24;
-    private String dlus1_1;
+    private String dPlus1_1;
     private String dPlus1_2;
     private String dPlus1_3;
     private String dPlus1_4;
